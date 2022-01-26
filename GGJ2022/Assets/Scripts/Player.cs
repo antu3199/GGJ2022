@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected CharacterController characterController;
     protected Vector3 playerVelocity;
     protected bool isGrounded;
-    [SerializeField] protected float playerSpeed = 1.0f;
+    [SerializeField] protected float playerSpeed = 3.0f;
     [SerializeField] protected float jumpHeight = 1.0f;
     protected const float gravityValue = -9.81f;
 
@@ -62,14 +62,5 @@ public class Player : MonoBehaviour
         {
             gameObject.transform.forward = moveVector;
         }
-
-        // Changes the height position of the player
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
-
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        characterController.Move(playerVelocity * Time.deltaTime);
     }
 }

@@ -13,6 +13,6 @@ public class MainCamera : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, trackedPlayer.position + offset, Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, trackedPlayer.position + offset, 3 * Time.deltaTime);
     }
 }
