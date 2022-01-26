@@ -7,7 +7,7 @@ using UnityEngine;
 */
 public class Player : MonoBehaviour
 {
-    protected CharacterController characterController;
+    [SerializeField] protected CharacterController characterController;
     protected Vector3 playerVelocity;
     protected bool isGrounded;
     [SerializeField] protected float playerSpeed = 1.0f;
@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     protected void Update()
     {
         // Yoinked from https://docs.unity3d.com/ScriptReference/CharacterController.Move.html
+
+        if (characterController == null) return;
+
         isGrounded = characterController.isGrounded;
         if (isGrounded && playerVelocity.y < 0) {
             playerVelocity.y = 0f;
@@ -43,11 +46,11 @@ public class Player : MonoBehaviour
             vertical = -1;
         }
 
-        if (Input.GetKey(leftKeyCode)) {
+        if (Input.GetKey(rightKeyCode)) {
             horizontal = 1;
         }
 
-         if (Input.GetKey(rightKeyCode)) {
+         if (Input.GetKey(leftKeyCode)) {
             horizontal = -1;
         }
 
