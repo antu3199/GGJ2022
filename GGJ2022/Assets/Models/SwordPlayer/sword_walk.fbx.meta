@@ -1,14 +1,11 @@
 fileFormatVersion: 2
-guid: 1cb75216be0d794438071965e383be15
+guid: ff85ba33d71f51542a7497a5504de2c9
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: 5675206370255973361
     second: clip0
-  - first:
-      74: 3170602791774123700
-    second: sword_idle
   externalObjects: {}
   materials:
     materialImportMode: 2
