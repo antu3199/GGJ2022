@@ -69,7 +69,7 @@ namespace HoudiniEngineUnity
 
 #elif UNITY_EDITOR_OSX || (!UNITY_EDITOR && UNITY_STANDALONE_OSX)
 
-                public const string HOUDINI_INSTALL_PATH = "C:\cygwin\home\prisms/Library/Application Support/Steam/steamapps/common/Houdini Indie";
+                public const string HOUDINI_INSTALL_PATH = "C:/cygwin/home/prisms/Library/Application Support/Steam/steamapps/common/Houdini Indie";
                 public const string HOUDINI_FRAMEWORKS_PATH = "/Frameworks/Houdini.framework/Versions/Current";
 
                 public const string HAPI_BIN_PATH		= HOUDINI_FRAMEWORKS_PATH + "/Resources/bin";
@@ -107,6 +107,6 @@ namespace HoudiniEngineUnity
                 public const string HAPI_LIBRARY			= HOUDINI_INSTALL_PATH + HAPI_LIBRARY_PATH + "/libHAPIL.so";
                 public const string HARC_LIBRARY                        = HOUDINI_INSTALL_PATH + HAPI_LIBRARY_PATH + "/libHARC.so";
 #endif
-        };
+        }
 
 }	// HoudiniEngineUnity
