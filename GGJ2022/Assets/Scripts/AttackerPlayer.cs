@@ -7,15 +7,31 @@ public class AttackerPlayer : Player
     // Start is called before the first frame update
     void Start()
     {
-        forwardKeyCode = KeyCode.UpArrow;
-        backwardKeyCode = KeyCode.DownArrow;
-        leftKeyCode = KeyCode.LeftArrow;
-        rightKeyCode = KeyCode.RightArrow;
+        ForwardKeyCode = KeyCode.UpArrow;
+        BackwardKeyCode = KeyCode.DownArrow;
+        LeftKeyCode = KeyCode.LeftArrow;
+        RightKeyCode = KeyCode.RightArrow;
     }
 
     // Update is called once per frame
     new void Update()
     {
         base.Update();
+    }
+
+    public override void DoAbility1() {
+
+    }
+
+    public override void DoAbility2() {
+
+    }
+
+    public override void DoAbility3() {
+
+    }
+
+    public override void DoUltimateAbility() {
+
     }
 }

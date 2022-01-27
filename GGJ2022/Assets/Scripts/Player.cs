@@ -5,19 +5,19 @@ using UnityEngine;
 /*
  * THe abstract player class, that the defender and attacker extend from
 */
-public class Player : MonoBehaviour
+public abstract class Player : MonoBehaviour
 {
-    [SerializeField] protected CharacterController characterController;
-    protected Vector3 playerVelocity;
-    protected bool isGrounded;
-    [SerializeField] protected float playerSpeed = 3.0f;
-    [SerializeField] protected float jumpHeight = 1.0f;
-    protected const float gravityValue = -9.81f;
+    [SerializeField] protected CharacterController CharacterController;
+    protected Vector3 PlayerVelocity;
+    protected bool IsGrounded;
+    [SerializeField] protected float PlayerSpeed = 3.0f;
+    [SerializeField] protected float JumpHeight = 1.0f;
+    protected const float GravityValue = -9.81f;
 
-    protected KeyCode forwardKeyCode = KeyCode.UpArrow;
-    protected KeyCode backwardKeyCode = KeyCode.DownArrow;
-    protected KeyCode leftKeyCode = KeyCode.LeftArrow;
-    protected KeyCode rightKeyCode = KeyCode.RightArrow;
+    protected KeyCode ForwardKeyCode = KeyCode.UpArrow;
+    protected KeyCode BackwardKeyCode = KeyCode.DownArrow;
+    protected KeyCode LeftKeyCode = KeyCode.LeftArrow;
+    protected KeyCode RightKeyCode = KeyCode.RightArrow;
 
     void Start()
     {
@@ -28,39 +28,46 @@ public class Player : MonoBehaviour
     {
         // Yoinked from https://docs.unity3d.com/ScriptReference/CharacterController.Move.html
 
-        if (characterController == null) return;
+        if (CharacterController == null) return;
 
-        isGrounded = characterController.isGrounded;
-        if (isGrounded && playerVelocity.y < 0) {
-            playerVelocity.y = 0f;
+        IsGrounded = CharacterController.isGrounded;
+        if (IsGrounded && PlayerVelocity.y < 0) {
+            PlayerVelocity.y = 0f;
         }
 
         float vertical = 0;
         float horizontal = 0;
 
-        if (Input.GetKey(forwardKeyCode)) {
+        if (Input.GetKey(ForwardKeyCode)) {
             vertical = 1;
         }
 
-        if (Input.GetKey(backwardKeyCode)) {
+        if (Input.GetKey(BackwardKeyCode)) {
             vertical = -1;
         }
 
-        if (Input.GetKey(rightKeyCode)) {
+        if (Input.GetKey(RightKeyCode)) {
             horizontal = 1;
         }
 
-         if (Input.GetKey(leftKeyCode)) {
+         if (Input.GetKey(LeftKeyCode)) {
             horizontal = -1;
         }
 
         Vector3 moveVector = new Vector3(horizontal, 0, vertical);
 
-        characterController.Move(moveVector * Time.deltaTime * playerSpeed);
+        CharacterController.Move(moveVector * Time.deltaTime * PlayerSpeed);
 
-        if (moveVector != Vector3.zero)
-        {
+        if (moveVector != Vector3.zero) {
             gameObject.transform.forward = moveVector;
         }
     }
+
+    public abstract void DoAbility1();
+
+    public abstract void DoAbility2();
+
+    public abstract void DoAbility3();
+
+    public abstract void DoUltimateAbility();
 }

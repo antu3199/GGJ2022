@@ -7,15 +7,31 @@ public class DefenderPlayer : Player
     // Start is called before the first frame update
     void Start()
     {
-        forwardKeyCode = KeyCode.W;
-        backwardKeyCode = KeyCode.S;
-        leftKeyCode = KeyCode.A;
-        rightKeyCode = KeyCode.D;
+        ForwardKeyCode = KeyCode.W;
+        BackwardKeyCode = KeyCode.S;
+        LeftKeyCode = KeyCode.A;
+        RightKeyCode = KeyCode.D;
     }
 
     // Update is called once per frame
     new void Update()
     {
         base.Update();
+    }
+
+     public override void DoAbility1() {
+
+    }
+
+    public override void DoAbility2() {
+
+    }
+
+    public override void DoAbility3() {
+
+    }
+
+    public override void DoUltimateAbility() {
+
     }
 }
