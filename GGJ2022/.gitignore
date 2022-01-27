@@ -61,3 +61,6 @@ crashlytics-build.properties
 # User Settings
 /[Uu]serSettings/
 
+
+heu_session.txt
+heu_settings.ini
