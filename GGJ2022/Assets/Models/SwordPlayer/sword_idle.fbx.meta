@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2c2270b511425514f9bbcc81217dd775
+guid: 8cff1bf093a0ff34d86d7fb2008cb28b
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -38,8 +38,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: clip0
-      takeName: clip0
+      name: sword_idle
+      takeName: sword_idle
       internalID: 0
       firstFrame: 1
       lastFrame: 30
