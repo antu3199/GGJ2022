@@ -19,6 +19,12 @@ public class AttackerPlayer : Player
         base.Update();
     }
 
+    protected override void SetWalking(bool isWalking) {
+        if (AnimationController != null) {
+            AnimationController.SetBool("IsWalking", isWalking);
+        }
+    }
+
     public override void DoAbility1() {
 
     }

@@ -8,6 +8,8 @@ using UnityEngine;
 public abstract class Player : MonoBehaviour
 {
     [SerializeField] protected CharacterController CharacterController;
+    [SerializeField] protected Animator AnimationController;
+
     protected Vector3 PlayerVelocity;
     protected bool IsGrounded;
     [SerializeField] protected float PlayerSpeed = 3.0f;
@@ -40,18 +42,26 @@ public abstract class Player : MonoBehaviour
 
         if (Input.GetKey(ForwardKeyCode)) {
             vertical = 1;
+            SetWalking(true);
         }
 
         if (Input.GetKey(BackwardKeyCode)) {
             vertical = -1;
+            SetWalking(true);
         }
 
         if (Input.GetKey(RightKeyCode)) {
             horizontal = 1;
+            SetWalking(true);
         }
 
          if (Input.GetKey(LeftKeyCode)) {
             horizontal = -1;
+            SetWalking(true);
+        }
+
+        if (horizontal == 0 && vertical == 0) {
+            SetWalking(false);
         }
 
         Vector3 moveVector = new Vector3(horizontal, 0, vertical);
@@ -62,6 +72,8 @@ public abstract class Player : MonoBehaviour
             gameObject.transform.forward = moveVector;
         }
     }
+
+    protected abstract void SetWalking(bool isWalking);
 
     public abstract void DoAbility1();
 

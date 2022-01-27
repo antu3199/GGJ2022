@@ -19,7 +19,11 @@ public class DefenderPlayer : Player
         base.Update();
     }
 
-     public override void DoAbility1() {
+    protected override void SetWalking(bool isWalking) {
+        
+    }
+
+    public override void DoAbility1() {
 
     }
 
