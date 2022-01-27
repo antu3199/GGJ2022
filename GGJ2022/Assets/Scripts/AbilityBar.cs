@@ -18,39 +18,28 @@ public class AbilityBar : MonoBehaviour
 
     [SerializeField] Player Player; // The player who the ability bar belongs to
 
+    void Start()
+    {
+        
+    }
+
     void Update()
     {
         // Listen for ability taps using the keyboard shortcuts
         if (Input.GetKey(Ability1Key)) {
-            OnAbility1Tapped();
+            Ability1.DoAbility();
         }
 
         if (Input.GetKey(Ability2Key)) {
-            OnAbility2Tapped();
+            Ability2.DoAbility();
         }
 
         if (Input.GetKey(Ability3Key)) {
-            OnAbility3Tapped();
+            Ability3.DoAbility();
         }
 
         if (Input.GetKey(UltimateAbilityKey)) {
-            OnUltimateAbilityTapped();
+            UltimateAbility.DoAbility();
         }
-    }
-
-    public void OnAbility1Tapped() {
-
-    }
-
-    public void OnAbility2Tapped() {
-
-    }
-
-    public void OnAbility3Tapped() {
-
-    }
-
-    public void OnUltimateAbilityTapped() {
-
     }
 }
