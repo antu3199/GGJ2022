@@ -20,6 +20,14 @@ public class AbilityBar : MonoBehaviour
 
     void Start()
     {
+        if (Player != null) {
+            Ability1?.SetCasterPlayer(Player);
+            Ability2?.SetCasterPlayer(Player);
+            Ability3?.SetCasterPlayer(Player);
+            UltimateAbility?.SetCasterPlayer(Player);
+        } else {
+            Debug.Log("Ability bar doesn't have an assigned caster player");
+        }
         
     }
 
@@ -41,5 +49,21 @@ public class AbilityBar : MonoBehaviour
         if (Input.GetKey(UltimateAbilityKey)) {
             UltimateAbility.DoAbility();
         }
+    }
+
+    public void OnAbility1Tapped() {
+        Ability1.DoAbility();
+    }
+
+    public void OnAbility2Tapped() {
+        Ability2.DoAbility();
+    }
+
+    public void OnAbility3Tapped() {
+        Ability3.DoAbility();
+    }
+
+    public void OnUltimateAbilityTapped() {
+        UltimateAbility.DoAbility();
     }
 }

@@ -105,7 +105,7 @@ ModelImporter:
       name: sword_walk_loop
       takeName: sword_walk
       internalID: 0
-      firstFrame: 11
+      firstFrame: 10
       lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
@@ -184,7 +184,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 100
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
