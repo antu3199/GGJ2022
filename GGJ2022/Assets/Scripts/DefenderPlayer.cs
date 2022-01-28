@@ -20,11 +20,16 @@ public class DefenderPlayer : Player
     }
 
     protected override void SetWalking(bool isWalking) {
-        
+        if (AnimationController != null) {
+            AnimationController.SetBool("IsWalking", isWalking);
+        }
     }
 
     public override void DoAbility1() {
-
+        if (AnimationController != null) {
+            AnimationController.ResetTrigger("DoBlock");
+            AnimationController.SetTrigger("DoBlock");
+        }
     }
 
     public override void DoAbility2() {
