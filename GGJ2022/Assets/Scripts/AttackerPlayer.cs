@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AttackerPlayer : Player
 {
-    // Start is called before the first frame update
+    public BoxCollider SwordCollider;
+
     void Start()
     {
         ForwardKeyCode = KeyCode.UpArrow;
@@ -13,7 +14,6 @@ public class AttackerPlayer : Player
         RightKeyCode = KeyCode.RightArrow;
     }
 
-    // Update is called once per frame
     new void Update()
     {
         base.Update();

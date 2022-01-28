@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DefenderPlayer : Player
 {
-    // Start is called before the first frame update
     void Start()
     {
         ForwardKeyCode = KeyCode.W;
@@ -13,7 +12,6 @@ public class DefenderPlayer : Player
         RightKeyCode = KeyCode.D;
     }
 
-    // Update is called once per frame
     new void Update()
     {
         base.Update();
