@@ -110,7 +110,7 @@ public class EnemyAI : MonoBehaviour
             float singleStep = (speedInDegPerSec * Mathf.Deg2Rad) * Time.fixedDeltaTime;
             transform.forward = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
             yield return new WaitForFixedUpdate();
-            //Debug.Log(Vector3.SqrMagnitude(transform.forward - direction));
+            Debug.Log(Vector3.SqrMagnitude(transform.forward - direction));
         }
 
         // Set the next State
