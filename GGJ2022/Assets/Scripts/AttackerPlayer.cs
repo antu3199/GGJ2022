@@ -26,7 +26,10 @@ public class AttackerPlayer : Player
     }
 
     public override void DoAbility1() {
-
+        if (AnimationController != null) {
+            AnimationController.ResetTrigger("DoBasicAttack");
+            AnimationController.SetTrigger("DoBasicAttack");
+        }
     }
 
     public override void DoAbility2() {

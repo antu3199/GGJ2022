@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6247041488929710443}
   m_Layer: 0
   m_Name: DefenderPlayer
-  m_TagString: Untagged
+  m_TagString: Defender
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e07e3328ccd9f64a989fa49753d85e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 6515747687137931642}
-  playerSpeed: 3
-  jumpHeight: 1
+  CharacterController: {fileID: 0}
+  AnimationController: {fileID: 0}
+  PlayerSpeed: 3
+  JumpHeight: 1
