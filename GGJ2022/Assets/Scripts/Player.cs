@@ -73,6 +73,10 @@ public abstract class Player : MonoBehaviour
         }
     }
 
+    public AnimatorStateInfo GetAnimatorStateInfo() {
+        return AnimationController.GetCurrentAnimatorStateInfo(0);
+    }
+
     protected abstract void SetWalking(bool isWalking);
 
     public abstract void DoAbility1();
