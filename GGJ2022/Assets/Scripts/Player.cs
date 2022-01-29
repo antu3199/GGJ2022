@@ -10,6 +10,11 @@ public abstract class Player : MonoBehaviour
     [SerializeField] protected CharacterController CharacterController;
     protected MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
+    
+    [SerializeField] HealthBar HealthBar;
+    [SerializeField] int TotalHealth;
+    [SerializeField] float Armor;
+    protected int CurrentHealth;
 
     protected Vector3 PlayerVelocity;
     protected bool IsGrounded;
@@ -24,6 +29,9 @@ public abstract class Player : MonoBehaviour
 
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
+
+        CurrentHealth = TotalHealth;
+        HealthBar.SetTotalHealth(TotalHealth);
     }
 
     protected void Update()
@@ -41,6 +49,8 @@ public abstract class Player : MonoBehaviour
         float horizontal = 0;
 
         if (Input.GetKey(ForwardKeyCode)) {
+            CurrentHealth -= 100;
+            HealthBar.SetHealth(CurrentHealth);
             vertical = 1;
         }
 
