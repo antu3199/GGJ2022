@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf521b5677e4498c96fc56f67727b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_slowAnimSpeed: 0.2
+  m_slowPercentage: 0.3
 --- !u!4 &1336427133
 Transform:
   m_ObjectHideFlags: 0
@@ -1952,8 +1952,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4953059871165036248}
   - component: {fileID: 4953059871174842552}
-  - component: {fileID: 4953059871165459193}
   - component: {fileID: 4953059871165459195}
+  - component: {fileID: 4953059871165459193}
   m_Layer: 0
   m_Name: Dance01 - Male
   m_TagString: Untagged
@@ -1970,7 +1970,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4953059871165459192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a84a20ae79aa4ca199e570a675086f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e99e859d4ad43cb843939ea8f180b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4953059871165459194
@@ -4823,7 +4823,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5536015616157102410}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a84a20ae79aa4ca199e570a675086f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e99e859d4ad43cb843939ea8f180b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5536015616157102412
@@ -5453,7 +5453,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7879410690031844425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a84a20ae79aa4ca199e570a675086f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e99e859d4ad43cb843939ea8f180b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7879410690031844427
@@ -8639,7 +8639,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8822010636498499586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a84a20ae79aa4ca199e570a675086f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e99e859d4ad43cb843939ea8f180b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8822010636498499588

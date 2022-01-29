@@ -55,6 +55,7 @@ public class EnemyAI : MonoBehaviour
 
     void Awake() 
     {
+        fov = GetComponent<FieldOfView>();
         myCharacterController = new MyCharacterController(characterController, animationController);       
     }
 
