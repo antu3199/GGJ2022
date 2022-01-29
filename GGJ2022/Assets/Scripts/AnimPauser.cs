@@ -12,6 +12,11 @@ public class AnimPauser: MonoBehaviour, IPausable
 		AttachPausable();
 	}
 
+	void OnDestroy() 
+	{
+		DetachPausable();
+	}
+
 	// Impl Interface
 	public void AttachPausable()
 	{
