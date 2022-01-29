@@ -7,30 +7,21 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] Slider Slider;
 
-    public int TotalHealth;
-
     private float _lerpDuration = 1; 
 
-    void Start() {
-        Slider.maxValue = 1.0f;
-    }
-
-    public void SetTotalHealth(int health) {
-        TotalHealth = health;
+    public void SetTotalHealth(int totalHealth) {
+        Slider.maxValue = totalHealth;
+        Slider.value = totalHealth;
     }
 
     public void SetHealth(int newHealth) {
+        if (newHealth <= 0) return;
+        
         // Lerp the slider to the new health
-
-        if (TotalHealth == 0) {
-            Debug.LogError("Trying to set the health bar but the total health is 0");
-            return;
-        }
-        Debug.Log("New health - " + newHealth);
-        StartCoroutine(HealthbarLerp(newHealth / TotalHealth));
+        StartCoroutine(HealthbarLerp(newHealth));
     }
 
-    IEnumerator HealthbarLerp(int newValue) {
+    IEnumerator HealthbarLerp(float newValue) {
         var startValue = Slider.value;
         float lerp = 0;
         
