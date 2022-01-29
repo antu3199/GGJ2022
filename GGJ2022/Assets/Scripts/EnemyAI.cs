@@ -31,7 +31,9 @@ public enum AiStateMachine {
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] protected CharacterController characterController;
-    protected FieldOfView fov;
+    protected MyCharacterController myCharacterController;
+    [SerializeField] protected Animator animationController;
+    [SerializeField] protected FieldOfView fov;
     protected bool isGrounded;
     [SerializeField] protected float playerSpeed;
     [SerializeField] protected float jumpHeight;
@@ -53,8 +55,8 @@ public class EnemyAI : MonoBehaviour
 
     void Awake() 
     {
-        characterController = GetComponent<CharacterController>();
-        fov = GetComponent<FieldOfView>();     
+        fov = GetComponent<FieldOfView>();
+        myCharacterController = new MyCharacterController(characterController, animationController);       
     }
 
     // Start is called before the first frame update
@@ -140,6 +142,9 @@ public class EnemyAI : MonoBehaviour
     // Also during this period, the AI may rest for a short duration
     IEnumerator Look(float restingPeriod) 
     {
+        // While the enemy is turning/looking, we wanna set the enemy to the idle animation
+        this.myCharacterController.Move(Vector3.zero);
+
         yield return new WaitForSeconds(restingPeriod);
         float randomAngle = Random.Range(-180f, 180f);
         this.nextLookDirection = Quaternion.AngleAxis(randomAngle, Vector3.up) * transform.forward;
@@ -186,7 +191,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 toWalkTo = transform.position + transform.forward * distance;
         while(Vector3.SqrMagnitude(transform.position - toWalkTo) >= this.characterController.radius)
         {
-            this.characterController.Move(transform.forward * Time.fixedDeltaTime * speed);
+            this.myCharacterController.Move(transform.forward * Time.fixedDeltaTime * speed);
             yield return new WaitForFixedUpdate();
         }
 
@@ -222,7 +227,7 @@ public class EnemyAI : MonoBehaviour
             // Turn the character
             transform.forward = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
             // Move the character
-            this.characterController.Move(direction * Time.fixedDeltaTime * speed);
+            this.myCharacterController.Move(direction * Time.fixedDeltaTime * speed);
             yield return new WaitForFixedUpdate();
             accTime += Time.fixedDeltaTime;
         }
@@ -237,6 +242,7 @@ public class EnemyAI : MonoBehaviour
     // ATTACK State, AI wait for enemy to complete it's attack
     IEnumerator Attack(GameObject target) {
         //TODO: Call the Attack Method for this unit
+        DoAttackAnimation();
         while(true) {
             //TODO: ... wait for attack to complete
             yield return new WaitForSeconds(3f);
@@ -247,5 +253,12 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForFixedUpdate();
         this.currentState = AiStateMachine.CHASE;
         yield return null;
+    }
+
+    protected virtual void DoAttackAnimation() {
+        if (animationController != null) {
+            animationController.ResetTrigger("DoAttack");
+            animationController.SetTrigger("DoAttack");
+        }
     }
 }

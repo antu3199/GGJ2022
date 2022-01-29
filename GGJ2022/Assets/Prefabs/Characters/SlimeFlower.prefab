@@ -65,6 +65,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 9108872531791335651}
+  animationController: {fileID: 8175343207582583938}
+  fov: {fileID: 7344462340028035936}
   playerSpeed: 4
   jumpHeight: 1
   turnSpeedInDegPerSec: 90
