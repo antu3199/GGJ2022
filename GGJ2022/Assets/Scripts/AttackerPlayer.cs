@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AttackerPlayer : Player
 {
-    public BoxCollider SwordCollider;
+    // Damage for all the abilities
+    public float BasicAttackDamage = 10f;
 
     void Start()
     {
