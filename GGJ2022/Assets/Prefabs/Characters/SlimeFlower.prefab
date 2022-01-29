@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3368290342911956316}
   - component: {fileID: 9108872531791335651}
   - component: {fileID: 4927077200529396034}
+  - component: {fileID: 7344462340028035936}
   m_Layer: 0
   m_Name: SlimeFlower
   m_TagString: Enemy
@@ -66,6 +67,30 @@ MonoBehaviour:
   characterController: {fileID: 9108872531791335651}
   playerSpeed: 4
   jumpHeight: 1
+  turnSpeedInDegPerSec: 0
+  chaseDuration: 0
+--- !u!114 &7344462340028035936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911270722244243222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bec1477350b24d13843c39e0708cedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 5.49
+  viewAngle: 106
+  targetMasks:
+  - serializedVersion: 2
+    m_Bits: 64
+  obstacleMasks:
+  - serializedVersion: 2
+    m_Bits: 256
+  Visible: []
+  delay: 0.2
 --- !u!1001 &7178322829961365198
 PrefabInstance:
   m_ObjectHideFlags: 0
