@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6515747687137931636}
   - component: {fileID: 6515747687137931642}
   - component: {fileID: 6247041488929710443}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DefenderPlayer
   m_TagString: Defender
   m_Icon: {fileID: 0}
@@ -118,9 +118,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7370551395737509421, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7201717995747054387, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5643111184001518892, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5196869016248971692, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5151492872390713093, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4942423906711107392, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1592296526167157296, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1589114533583799141, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -780124389452353163, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
       propertyPath: m_Name
       value: shield_idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3256684802130647663, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4110411297218920207, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478783269562594379, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4502223235629892308, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044143413991196143, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5293317742755927797, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfac0ac00806e8444a42688e12ee5d6f, type: 3}
@@ -212,6 +276,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 352f436a28803b34991579e2d02628b2, type: 3}
       propertyPath: m_Name
       value: shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 352f436a28803b34991579e2d02628b2, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 352f436a28803b34991579e2d02628b2, type: 3}

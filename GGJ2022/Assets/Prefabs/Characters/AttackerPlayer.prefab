@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7531714756243614253}
   - component: {fileID: 722506436555791180}
   - component: {fileID: 722506436555791179}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackerPlayer
   m_TagString: Attacker
   m_Icon: {fileID: 0}
@@ -67,6 +67,7 @@ MonoBehaviour:
   AnimationController: {fileID: 8465987813919406319}
   PlayerSpeed: 3
   JumpHeight: 1
+  BasicAttackDamage: 10
 --- !u!1001 &280630776560038298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,6 +122,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6be744a344b7f9849af34917aaffea1a, type: 3}
       propertyPath: m_Name
       value: sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6be744a344b7f9849af34917aaffea1a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6be744a344b7f9849af34917aaffea1a, type: 3}
@@ -222,9 +227,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7370551395737509421, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7201717995747054387, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5643111184001518892, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5196869016248971692, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5151492872390713093, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4942423906711107392, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1592296526167157296, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1589114533583799141, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -780124389452353163, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
       propertyPath: m_Name
       value: sword_idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3256684802130647663, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4110411297218920207, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478783269562594379, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4502223235629892308, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044143413991196143, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5293317742755927797, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}

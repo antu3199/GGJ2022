@@ -67,8 +67,8 @@ MonoBehaviour:
   characterController: {fileID: 9108872531791335651}
   playerSpeed: 4
   jumpHeight: 1
-  turnSpeedInDegPerSec: 0
-  chaseDuration: 0
+  turnSpeedInDegPerSec: 90
+  chaseDuration: 5
 --- !u!114 &7344462340028035936
 MonoBehaviour:
   m_ObjectHideFlags: 0
