@@ -35,4 +35,19 @@ public class MyCharacterController
 
         return CharacterController.Move(motion);
     }
+
+    public AnimatorStateInfo GetAnimatorStateInfo() {
+        return _animationController.GetCurrentAnimatorStateInfo(0);
+    }
+
+    public virtual bool IsAttacking() {
+        return GetAnimatorStateInfo().IsName("Basic Attack");
+    }
+
+    public virtual void DoAttackAnimation() {
+        if (_animationController != null) {
+            _animationController.ResetTrigger("DoAttack");
+            _animationController.SetTrigger("DoAttack");
+        }
+    }
 }

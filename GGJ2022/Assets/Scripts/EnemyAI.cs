@@ -28,11 +28,10 @@ public enum AiStateMachine {
 //             ATTACK
 
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IPausable
 {
     [SerializeField] protected CharacterController characterController;
     protected MyCharacterController myCharacterController;
-    [SerializeField] protected Animator animationController;
     [SerializeField] protected FieldOfView fov;
     protected bool isGrounded;
     [SerializeField] protected float playerSpeed;
@@ -52,10 +51,13 @@ public class EnemyAI : MonoBehaviour
     // WALK Routine
     // CHASE Routine
     protected GameObject aggroTarget;
+    protected float slowPercentage = 1f; // % of time
 
     void Awake() 
     {
-        myCharacterController = new MyCharacterController(characterController, animationController);       
+        fov = GetComponent<FieldOfView>();
+        myCharacterController = new MyCharacterController(characterController, GetComponentInChildren<Animator>());
+        AttachPausable();
     }
 
     // Start is called before the first frame update
@@ -64,10 +66,37 @@ public class EnemyAI : MonoBehaviour
         StartCoroutine(StateMachineHandler());
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDestroy()
     {
+        DetachPausable();
+    }
 
+    // Impl Interface
+    public void AttachPausable()
+    {
+        PauseController pauser = (PauseController)PauseController.Instance;
+        pauser.Attach(this.gameObject, this);
+    }
+
+    public void DetachPausable()
+    {
+        PauseController pauser = (PauseController)PauseController.Instance;
+        pauser.Detach(this.gameObject, this);
+    }
+
+    public void Pause()
+    {
+        slowPercentage = 0;
+    }
+
+    public void Slow(float percentage)
+    {
+        slowPercentage = percentage;
+    }
+
+    public void Reset()
+    {
+        slowPercentage = 1;
     }
 
     IEnumerator StateMachineHandler() 
@@ -144,7 +173,12 @@ public class EnemyAI : MonoBehaviour
         // While the enemy is turning/looking, we wanna set the enemy to the idle animation
         this.myCharacterController.Move(Vector3.zero);
 
-        yield return new WaitForSeconds(restingPeriod);
+        float rested = 0f;
+        while(rested < restingPeriod) {
+            yield return new WaitForSeconds(0.5f);
+            rested += 0.5f * this.slowPercentage;
+        }
+        
         float randomAngle = Random.Range(-180f, 180f);
         this.nextLookDirection = Quaternion.AngleAxis(randomAngle, Vector3.up) * transform.forward;
         
@@ -159,7 +193,7 @@ public class EnemyAI : MonoBehaviour
         // Fuzzy Compare
         while(Vector3.SqrMagnitude(transform.forward - direction) > 0.001f)
         {
-            float singleStep = (speedInDegPerSec * Mathf.Deg2Rad) * Time.fixedDeltaTime;
+            float singleStep = (speedInDegPerSec * Mathf.Deg2Rad) * Time.fixedDeltaTime * this.slowPercentage;
             transform.forward = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
             yield return new WaitForFixedUpdate();
         }
@@ -190,7 +224,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 toWalkTo = transform.position + transform.forward * distance;
         while(Vector3.SqrMagnitude(transform.position - toWalkTo) >= this.characterController.radius)
         {
-            this.myCharacterController.Move(transform.forward * Time.fixedDeltaTime * speed);
+            this.myCharacterController.Move(transform.forward * Time.fixedDeltaTime * speed * this.slowPercentage);
             yield return new WaitForFixedUpdate();
         }
 
@@ -221,14 +255,15 @@ public class EnemyAI : MonoBehaviour
             if(accTime > chaseTime) {
                 break;
             }
+            float updateTime = Time.fixedDeltaTime * this.slowPercentage;
             Vector3 direction = (toChase.transform.position - transform.position).normalized;
-            float singleStep = (turnSpeedInDegPerSec * Mathf.Deg2Rad) * Time.fixedDeltaTime;
+            float singleStep = (turnSpeedInDegPerSec * Mathf.Deg2Rad) * updateTime;
             // Turn the character
             transform.forward = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
             // Move the character
-            this.myCharacterController.Move(direction * Time.fixedDeltaTime * speed);
+            this.myCharacterController.Move(direction * speed * updateTime);
             yield return new WaitForFixedUpdate();
-            accTime += Time.fixedDeltaTime;
+            accTime += updateTime;
         }
 
         // Ensure we at least spend one frame before updating current state
@@ -240,24 +275,14 @@ public class EnemyAI : MonoBehaviour
 
     // ATTACK State, AI wait for enemy to complete it's attack
     IEnumerator Attack(GameObject target) {
-        //TODO: Call the Attack Method for this unit
-        DoAttackAnimation();
-        while(true) {
-            //TODO: ... wait for attack to complete
-            yield return new WaitForSeconds(3f);
-            break;
+        myCharacterController.DoAttackAnimation();
+        while(myCharacterController.IsAttacking()) {            
+            yield return new WaitForSeconds(0.5f);
         }
 
         // Ensure we at least spend one frame before updating current state
         yield return new WaitForFixedUpdate();
         this.currentState = AiStateMachine.CHASE;
         yield return null;
-    }
-
-    protected virtual void DoAttackAnimation() {
-        if (animationController != null) {
-            animationController.ResetTrigger("DoAttack");
-            animationController.SetTrigger("DoAttack");
-        }
     }
 }
