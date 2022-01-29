@@ -67,6 +67,7 @@ MonoBehaviour:
   CharacterController: {fileID: 722506436555791180}
   AnimationController: {fileID: 8465987813919406319}
   HealthBar: {fileID: 1873168565947515996}
+  HealthBarCanvas: {fileID: 3212081341116458464}
   TotalHealth: 1000
   Armor: 0
   PlayerSpeed: 3

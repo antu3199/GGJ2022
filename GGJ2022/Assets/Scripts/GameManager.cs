@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : Global
+public class GameManager : Global<GameManager>
 {
     [SerializeField] EnemyPool EnemyPool;
     [SerializeField] AttackerPlayer AttackerPlayer;

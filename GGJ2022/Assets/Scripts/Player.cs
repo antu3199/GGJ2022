@@ -12,6 +12,7 @@ public abstract class Player : MonoBehaviour
     [SerializeField] protected Animator AnimationController;
     
     [SerializeField] HealthBar HealthBar;
+    [SerializeField] Canvas HealthBarCanvas;
     [SerializeField] int TotalHealth;
     [SerializeField] float Armor;
     protected int CurrentHealth;
@@ -72,6 +73,11 @@ public abstract class Player : MonoBehaviour
 
         if (moveVector != Vector3.zero) {
             gameObject.transform.forward = moveVector;
+        }
+
+        // We have to make the healthbar's rotation the reverse of the player, so the healthbar stays facing forward
+        if (HealthBarCanvas != null) {
+            HealthBarCanvas.transform.rotation = Quaternion.Euler(0, transform.rotation.y * -1f, 0);
         }
     }
 

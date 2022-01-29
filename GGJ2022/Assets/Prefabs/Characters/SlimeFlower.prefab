@@ -65,7 +65,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 9108872531791335651}
-  animationController: {fileID: 8175343207582583938}
   fov: {fileID: 7344462340028035936}
   playerSpeed: 4
   jumpHeight: 1
@@ -179,3 +178,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2666083357714023275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8025396141684276127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63e99e859d4ad43cb843939ea8f180b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

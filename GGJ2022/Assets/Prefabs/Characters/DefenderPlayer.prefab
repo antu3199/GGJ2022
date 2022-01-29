@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6515747687137931636}
-  - component: {fileID: 6515747687137931642}
+  - component: {fileID: 3383296989510964355}
   - component: {fileID: 6247041488929710443}
   m_Layer: 6
   m_Name: DefenderPlayer
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &6515747687137931642
+--- !u!143 &3383296989510964355
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,9 +64,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e07e3328ccd9f64a989fa49753d85e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterController: {fileID: 6515747687137931642}
+  CharacterController: {fileID: 3383296989510964355}
   AnimationController: {fileID: 3610186564697744329}
   HealthBar: {fileID: 8295577861460806435}
+  HealthBarCanvas: {fileID: 2863134675238743323}
   TotalHealth: 1000
   Armor: 0
   PlayerSpeed: 3
@@ -501,6 +502,14 @@ PrefabInstance:
     - target: {fileID: 3981564722194641073, guid: dd42a4039c7e1984d89183ed937a94b6, type: 3}
       propertyPath: m_Name
       value: HealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200282490824459406, guid: dd42a4039c7e1984d89183ed937a94b6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200282490824459406, guid: dd42a4039c7e1984d89183ed937a94b6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd42a4039c7e1984d89183ed937a94b6, type: 3}

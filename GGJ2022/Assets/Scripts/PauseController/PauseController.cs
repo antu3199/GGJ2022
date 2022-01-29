@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseController: Global
+public class PauseController: Global<PauseController>
 {
     // Public Members
     [Range(0f, 1f)]
