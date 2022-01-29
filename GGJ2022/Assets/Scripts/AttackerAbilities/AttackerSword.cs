@@ -13,10 +13,8 @@ public class AttackerSword : MonoBehaviour
             Debug.LogError("The attacker is null in the sword script :((");
         }
 
-        AnimatorStateInfo animatorStateInfo = Attacker.GetAnimatorStateInfo();
-
         // We also only want to check for collisions when the attacker is doing an attack animation
-        if (animatorStateInfo.IsName("Basic Attack")) {
+        if (Attacker.IsAttacking()) {
             // Check if the sword collided with an enemy
             if (other.gameObject.tag == "Enemy") {
                 Debug.Log("Attacker sword and enemy collision detected");

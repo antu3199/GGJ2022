@@ -85,6 +85,10 @@ public abstract class Player : MonoBehaviour
         return AnimationController.GetCurrentAnimatorStateInfo(0);
     }
 
+    public bool IsAttacking() {
+        return MyCharacterController.IsAttacking();
+    }
+
 
     public abstract void DoAbility1();
 
