@@ -64,3 +64,5 @@ crashlytics-build.properties
 
 heu_session.txt
 heu_settings.ini
+
+/*.vscode
