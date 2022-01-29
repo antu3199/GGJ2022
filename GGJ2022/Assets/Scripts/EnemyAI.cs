@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour
     void Awake() 
     {
         characterController = GetComponent<CharacterController>();
-        fov = GetComponent<FieldOfView>();        
+        fov = GetComponent<FieldOfView>();     
     }
 
     // Start is called before the first frame update
