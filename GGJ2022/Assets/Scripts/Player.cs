@@ -8,6 +8,7 @@ using UnityEngine;
 public abstract class Player : MonoBehaviour
 {
     [SerializeField] protected CharacterController CharacterController;
+    protected MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
 
     protected Vector3 PlayerVelocity;
@@ -21,9 +22,8 @@ public abstract class Player : MonoBehaviour
     protected KeyCode LeftKeyCode = KeyCode.LeftArrow;
     protected KeyCode RightKeyCode = KeyCode.RightArrow;
 
-    void Start()
-    {
-        
+    void Awake() {
+        MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
     }
 
     protected void Update()
@@ -42,31 +42,23 @@ public abstract class Player : MonoBehaviour
 
         if (Input.GetKey(ForwardKeyCode)) {
             vertical = 1;
-            SetWalking(true);
         }
 
         if (Input.GetKey(BackwardKeyCode)) {
             vertical = -1;
-            SetWalking(true);
         }
 
         if (Input.GetKey(RightKeyCode)) {
             horizontal = 1;
-            SetWalking(true);
         }
 
          if (Input.GetKey(LeftKeyCode)) {
             horizontal = -1;
-            SetWalking(true);
-        }
-
-        if (horizontal == 0 && vertical == 0) {
-            SetWalking(false);
         }
 
         Vector3 moveVector = new Vector3(horizontal, 0, vertical);
 
-        CharacterController.Move(moveVector * Time.deltaTime * PlayerSpeed);
+        MyCharacterController.Move(moveVector * Time.deltaTime * PlayerSpeed);
 
         if (moveVector != Vector3.zero) {
             gameObject.transform.forward = moveVector;
@@ -77,7 +69,6 @@ public abstract class Player : MonoBehaviour
         return AnimationController.GetCurrentAnimatorStateInfo(0);
     }
 
-    protected abstract void SetWalking(bool isWalking);
 
     public abstract void DoAbility1();
 
