@@ -31,7 +31,7 @@ public abstract class Player : MonoBehaviour
     [SerializeField] int InitialShield = 200;
     protected int CurrentHealth;
     protected int CurrentShield;
-    protected bool IsDead = false;
+    public bool IsDead = false;
 
     public Vector3 PlayerVelocity;
     protected bool IsGrounded;
@@ -59,6 +59,16 @@ public abstract class Player : MonoBehaviour
         HealthBar.SetTotalHealth(TotalHealth);
         ShieldBar.SetTotalHealth(TotalHealth);
         ShieldBar.SetHealthImmediate(CurrentShield);
+    }
+
+    public void SetHealth(int Health)
+    {
+        HealthBar.SetHealth(Mathf.Max(Health, TotalHealth));
+    }
+    
+    public int GetHealth()
+    {
+        return CurrentHealth;
     }
 
     protected void Update()
@@ -216,9 +226,14 @@ public abstract class Player : MonoBehaviour
     public void AddShield(int shield)
     {
         if (IsDead) return;
-        
+
         CurrentShield += shield;
         ShieldBar.SetHealth(CurrentShield);
+    }
+
+    public void ResetDeath()
+    {
+            MyCharacterController.ResetDeathAnimation();
     }
 
     public abstract void DoAbility1();

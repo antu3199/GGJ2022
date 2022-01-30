@@ -63,6 +63,13 @@ public class MyCharacterController
         DoDeathAnimation(); // Do the death animation
     }
 
+
+    public virtual void ResetDeathAnimation() {
+        if (_animationController != null) {
+            _animationController.ResetTrigger("Die");
+        }
+    }
+
     public virtual void DoDeathAnimation() {
         if (_animationController != null) {
             _animationController.ResetTrigger("Die");

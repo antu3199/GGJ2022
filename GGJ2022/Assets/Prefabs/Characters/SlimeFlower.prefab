@@ -74,7 +74,7 @@ MonoBehaviour:
   HealthBar: {fileID: 6694471811221792292}
   HealthBarCanvas: {fileID: 8978878334711905763}
   TotalHealth: 300
-  Damage: 500
+  Damage: 250
   playerSpeed: 4
   jumpHeight: 1
   turnSpeedInDegPerSec: 90

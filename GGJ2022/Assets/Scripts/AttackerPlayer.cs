@@ -43,4 +43,12 @@ public class AttackerPlayer : Player
         AnimationController.ResetTrigger("DoFinalBreath");
         AnimationController.SetTrigger("DoFinalBreath");
     }
+
+    public void Revive() {
+        IsDead = false;
+        CanMove = true;
+
+        AnimationController.ResetTrigger("Revive");
+        AnimationController.SetTrigger("Revive");
+    }
 }
