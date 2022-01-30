@@ -1329,7 +1329,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650640659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.15, z: 0}
   m_LocalScale: {x: 50, y: 2.6130273, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2047,6 +2047,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyPool
       objectReference: {fileID: 0}
+    - target: {fileID: 5021564105633382294, guid: 788ec4f1966b5ca42b24964cce3793ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7243536531211466911, guid: 788ec4f1966b5ca42b24964cce3793ce, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2296,7 +2300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531714756243614253, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.442
       objectReference: {fileID: 0}
     - target: {fileID: 7531714756243614253, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
       propertyPath: m_LocalPosition.z

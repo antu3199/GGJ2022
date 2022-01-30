@@ -56,6 +56,11 @@ public abstract class Player : MonoBehaviour
         if (IsGrounded && PlayerVelocity.y < 0) {
             PlayerVelocity.y = 0f;
         }
+        
+        if (!IsGrounded)
+        {
+            PlayerVelocity.y += -9.8f; // Add some gravity to prevent glitching
+        }
 
         float vertical = 0;
         float horizontal = 0;
@@ -85,7 +90,7 @@ public abstract class Player : MonoBehaviour
             moveVector = Vector3.zero;
         }
 
-        MyCharacterController.Move(moveVector * Time.deltaTime * PlayerSpeed);
+        MyCharacterController.Move((PlayerVelocity + moveVector * PlayerSpeed) * Time.deltaTime);
 
         if (moveVector != Vector3.zero) {
             gameObject.transform.forward = moveVector;

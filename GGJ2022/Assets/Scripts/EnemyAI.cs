@@ -68,6 +68,9 @@ public class EnemyAI : MonoBehaviour, IPausable
 
     protected bool isDead = false;
 
+    protected Vector3 EnemyVelocity;
+    protected bool IsGrounded;
+
     void Awake() 
     {
         fov = GetComponent<FieldOfView>();
@@ -107,7 +110,19 @@ public class EnemyAI : MonoBehaviour, IPausable
 
             HealthBarCanvas.transform.rotation = Quaternion.LookRotation(transform.position - locationToUse, Vector3.up);
         }
+
+        IsGrounded = characterController.isGrounded;
+        if ((IsGrounded && EnemyVelocity.y < 0) || isDead) {
+            EnemyVelocity.y = 0f;
+        }
+        
+        if (!IsGrounded && !isDead)
+        {
+            EnemyVelocity.y += -9.8f; // Add some gravity to prevent glitching
+        }
+
     }
+
 
     void OnDestroy()
     {
@@ -220,7 +235,7 @@ public class EnemyAI : MonoBehaviour, IPausable
     IEnumerator Look(float restingPeriod) 
     {
         // While the enemy is turning/looking, we wanna set the enemy to the idle animation
-        this.myCharacterController.Move(Vector3.zero);
+        this.myCharacterController.Move(EnemyVelocity + Vector3.zero);
 
         float rested = 0f;
         while(rested < restingPeriod) {
@@ -274,7 +289,7 @@ public class EnemyAI : MonoBehaviour, IPausable
         while(Vector3.SqrMagnitude(transform.position - toWalkTo) >= this.characterController.radius)
         {
             if (!isDead) {
-                this.myCharacterController.Move(transform.forward * Time.fixedDeltaTime * speed * this.slowPercentage);
+                this.myCharacterController.Move((EnemyVelocity + transform.forward * Time.fixedDeltaTime * speed) * this.slowPercentage);
             }
             yield return new WaitForFixedUpdate();
         }
@@ -314,7 +329,7 @@ public class EnemyAI : MonoBehaviour, IPausable
                 // Turn the character
                 transform.forward = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
                 // Move the character
-                this.myCharacterController.Move(direction * speed * updateTime);
+                this.myCharacterController.Move((EnemyVelocity + direction * speed) * updateTime);
             }
     
             yield return new WaitForFixedUpdate();
@@ -385,7 +400,7 @@ public class EnemyAI : MonoBehaviour, IPausable
         }
 
         while (timePassed < sinkDuration) {
-            this.transform.position = new Vector3(0, this.transform.position.y - 0.05f, 0);
+            this.transform.position += new Vector3(0, -0.05f, 0);
             timePassed += Time.deltaTime;
             yield return null;
         }

@@ -22,8 +22,10 @@ public class MyCharacterController
     }
 
     public CollisionFlags Move(Vector3 motion) {
+        Vector3 motionNoY = motion;
+        motionNoY.y = 0;
         // If we're passed (approx) the zero vector, then the character is not walking
-        if (Vector3.Distance(motion, Vector3.zero) <= 0.005) {
+        if (Vector3.Distance(motionNoY, Vector3.zero) <= 0.005) {
             if (_animationController != null) {
                 _animationController.SetBool("IsWalking", false);
             }
