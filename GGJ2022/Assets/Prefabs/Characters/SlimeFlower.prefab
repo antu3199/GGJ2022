@@ -70,6 +70,7 @@ MonoBehaviour:
   DefaultMaterial: {fileID: 2100000, guid: ea7abc572bca5964cacd3605d02ab544, type: 2}
   AttackedMaterial: {fileID: 2100000, guid: f85a2b3b17982a647a3d7b8bd0f5b9a6, type: 2}
   MeshRenderer: {fileID: 1219594275377074729}
+  DeathPFX: {fileID: 828238225009647491, guid: ffe43f91e9e338a459d9020bb8f0c968, type: 3}
   HealthBar: {fileID: 6694471811221792292}
   HealthBarCanvas: {fileID: 8978878334711905763}
   TotalHealth: 300

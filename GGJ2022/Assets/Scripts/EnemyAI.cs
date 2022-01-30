@@ -38,6 +38,8 @@ public class EnemyAI : MonoBehaviour, IPausable
     [SerializeField] protected Material AttackedMaterial; // Enemy changes to red when it gets hit
     [SerializeField] protected SkinnedMeshRenderer MeshRenderer;
 
+    [SerializeField] protected ParticleSystem DeathPFX;
+
     [SerializeField] HealthBar HealthBar;
     [SerializeField] Canvas HealthBarCanvas;
     [SerializeField] int TotalHealth;
@@ -62,6 +64,8 @@ public class EnemyAI : MonoBehaviour, IPausable
     // CHASE Routine
     protected GameObject aggroTarget;
     protected float slowPercentage = 1f; // % of time
+
+    protected bool isDead = false;
 
     void Awake() 
     {
@@ -315,8 +319,17 @@ public class EnemyAI : MonoBehaviour, IPausable
         HealthBar.SetHealth(CurrentHealth);
 
         if (CurrentHealth <= 0) {
-            // todo: Go into dead state, and do some death pfx and then destroy this object
-            myCharacterController.Death();
+            if (!isDead) {
+                isDead = true;
+                
+                // todo: Go into dead state, and do some death pfx and then destroy this object
+                myCharacterController.Death();
+
+                // Instantiate the death pfx and then destroy it after the particle system's lifetime
+                Destroy(Instantiate(DeathPFX, transform.position, Quaternion.identity), DeathPFX.main.startLifetime.constant);
+
+                StartCoroutine(SinkIntoGroundAndDestroy());
+            }
         }
     }
 
@@ -326,5 +339,25 @@ public class EnemyAI : MonoBehaviour, IPausable
         yield return new WaitForSeconds(0.2f);
 
         MeshRenderer.material = DefaultMaterial;
+    }
+
+    // After the enemy dies, just have them sink into the ground I guess
+    // We can destroy it after
+    IEnumerator SinkIntoGroundAndDestroy() {
+        float sinkDuration = 1.5f;
+        float timePassed = 0f;
+
+        // Only start sinking into the ground after the animation is done (25 frames)
+        for (int i=0; i < 25; i++) {
+            yield return null;
+        }
+
+        while (timePassed < sinkDuration) {
+            this.transform.position = new Vector3(0, this.transform.position.y - 0.05f, 0);
+            timePassed += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(this.gameObject);
     }
 }
