@@ -28,14 +28,19 @@ public class AttackerPlayer : Player
     }
 
     public override void DoAbility2() {
-
+        if (AnimationController != null) {
+            AnimationController.ResetTrigger("DoSpinToWin");
+            AnimationController.SetTrigger("DoSpinToWin");
+        }
     }
 
     public override void DoAbility3() {
-
+        AnimationController.ResetTrigger("DoQuickAttack");
+        AnimationController.SetTrigger("DoQuickAttack");
     }
 
     public override void DoUltimateAbility() {
-
+        AnimationController.ResetTrigger("DoFinalBreath");
+        AnimationController.SetTrigger("DoFinalBreath");
     }
 }
