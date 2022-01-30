@@ -3,56 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum CommandType {
-	MOVE,
-	ATTACK
+    MOVE,
+    ATTACK
 }
 
 public abstract class Command {
-	public CommandType Type;
-	public abstract void Lock();
+    public CommandType Type;
+    public abstract void Lock();
+    public abstract GameObject GetIndicator();
 }
 
 public class MoveCommand: Command {
-	public Vector3 StartPosition;
-	public Vector3 EndPosition;
-	public MoveLine LineRenderer;
+    public Vector3 StartPosition;
+    public Vector3 EndPosition;
+    public MoveLine LineRenderer;
 
-	public MoveCommand(Vector3 startPos, GameObject obj, Transform follow) {
-		StartPosition = startPos;
-		LineRenderer = obj.GetComponent<MoveLine>();
-		LineRenderer.Init(startPos, follow);
-	}
+    public MoveCommand(Vector3 startPos, GameObject obj, Transform follow) {
+        Type = CommandType.MOVE;
+        StartPosition = startPos;
+        LineRenderer = obj.GetComponent<MoveLine>();
+        LineRenderer.Init(startPos, follow);
+    }
 
-	public override void Lock() {
-		LineRenderer.Lock();
-	}
+    public override GameObject GetIndicator() {
+        return LineRenderer.gameObject;
+    }
+
+    public override void Lock() {
+        EndPosition = LineRenderer.Lock();
+    }
 }
 
 public class AttackCommand: Command {
-	public string AttackName;
-	public Vector3 Position;
-	public Vector3 Direction;
-	public GameObject AttackIndicator;
+    public string AttackName;
+    public Vector3 Position;
+    public Vector3 Direction;
+    public GameObject AttackIndicator;
 
-	public AttackCommand(Vector3 position, Vector3 direction, GameObject obj, string attackName) {
-		Position = position;
-		Direction = direction;
-		AttackIndicator = obj;
-		AttackName = attackName;
-	}
+    public AttackCommand(Vector3 position, Vector3 direction, GameObject obj, string attackName) {
+        Type = CommandType.ATTACK;
+        Position = position;
+        Direction = direction;
+        AttackIndicator = obj;
+        AttackName = attackName;
+    }
 
-	public override void Lock() {
-		AttackIndicator.transform.position = Position;
-		AttackIndicator.transform.forward = Direction;
-	}
+    public override GameObject GetIndicator() {
+        return AttackIndicator.gameObject;
+    }
+
+    public override void Lock() {
+        AttackIndicator.transform.position = Position;
+        AttackIndicator.transform.forward = Direction;
+    }
 }
 
-public class PlayerPlanSetter: MonoBehaviour {	
-	// Move Ghost Objects	
-	protected CharacterController _cc;
-	[SerializeField] protected float PlayerSpeed = 3.0f;
-	// KeyCommand Overrides
-	[SerializeField] protected KeyCode ForwardKeyCode = KeyCode.UpArrow;
+public class PlayerPlanSetter: MonoBehaviour {  
+    // Move Ghost Objects   
+    protected CharacterController _cc;
+    [SerializeField] protected float PlayerSpeed = 3.0f;
+    // KeyCommand Overrides
+    [SerializeField] protected KeyCode ForwardKeyCode = KeyCode.UpArrow;
     [SerializeField] protected KeyCode BackwardKeyCode = KeyCode.DownArrow;
     [SerializeField] protected KeyCode LeftKeyCode = KeyCode.LeftArrow;
     [SerializeField] protected KeyCode RightKeyCode = KeyCode.RightArrow;
@@ -69,9 +80,9 @@ public class PlayerPlanSetter: MonoBehaviour {
     [SerializeField] GameObject _movePrefab;
     [SerializeField] GameObject _attackPrefab;
 
-	void Start()
+    void Start()
     {
-    	_cc = GetComponent<CharacterController>();
+        _cc = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -80,45 +91,53 @@ public class PlayerPlanSetter: MonoBehaviour {
     }
 
     void OnEnable() {
-    	Reset();
-    	CreateCommand(CommandType.MOVE);
+        Reset();
+        CreateCommand(CommandType.MOVE);
     }
 
     void OnDisable() {
-    	Reset();
+        Reset();
     }
 
-    public List<Command> GetCommands() 
+    public List<Command> GetPlan() 
     {
-    	return _commands;
+        return new List<Command>(_commands);
     }
 
     public void Reset() {
-    	transform.localPosition = Vector3.zero;
-    	_commands.Clear();
+        transform.localPosition = Vector3.zero;
+        foreach(Command command in _commands) {
+            Destroy(command.GetIndicator());
+        }
+        if(_currentCommand != null) {
+            Destroy(_currentCommand.GetIndicator());
+            _currentCommand = null;
+        }
+        _commands.Clear();
     }
 
     public void CreateCommand(CommandType type, string attackName = "") {
-    	if(type == CommandType.MOVE) {
-    		GameObject obj = (GameObject)Instantiate(_movePrefab, transform.parent);
-    		_currentCommand = new MoveCommand(transform.position, obj, transform);
-    	}
-    	else if(type == CommandType.ATTACK) {
-    		_currentCommand.Lock(); //Lock an existing move command
-    		GameObject obj = (GameObject)Instantiate(_attackPrefab, transform.parent);
-    		_currentCommand = new AttackCommand(transform.position, transform.forward, obj, attackName);
-    	}
+        if(type == CommandType.MOVE) {
+            GameObject obj = (GameObject)Instantiate(_movePrefab, transform.parent);
+            _currentCommand = new MoveCommand(transform.position, obj, transform);
+        }
+        else if(type == CommandType.ATTACK) {
+            _currentCommand.Lock(); 
+            _commands.Add(_currentCommand); //Lock an existing move command
+            GameObject obj = (GameObject)Instantiate(_attackPrefab, transform.parent);
+            _currentCommand = new AttackCommand(transform.position, transform.forward, obj, attackName);
+        }
     }
 
     public void LockInCommand() {
-    	if(_currentCommand == null) { return; }
-    	_currentCommand.Lock();
-    	_commands.Add(_currentCommand);
-    	CreateCommand(CommandType.MOVE);
+        if(_currentCommand == null) { return; }
+        _currentCommand.Lock();
+        _commands.Add(_currentCommand);
+        CreateCommand(CommandType.MOVE);
     }
 
     private void MovementHandler() {
-    	// Yoinked from https://docs.unity3d.com/ScriptReference/CharacterController.Move.html
+        // Yoinked from https://docs.unity3d.com/ScriptReference/CharacterController.Move.html
         if (_cc == null) return;
 
         float vertical = 0;
@@ -141,24 +160,24 @@ public class PlayerPlanSetter: MonoBehaviour {
         }
 
         if(Input.GetKeyDown(LockMoveCommandCode)) {
-        	LockInCommand();
+            LockInCommand();
         }
 
         if(Input.GetKeyDown(LockAttack1CommandCode)) {
-        	CreateCommand(CommandType.ATTACK, "1");
-        	LockInCommand();
+            CreateCommand(CommandType.ATTACK, "1");
+            LockInCommand();
         }
         if(Input.GetKeyDown(LockAttack2CommandCode)) {
-        	CreateCommand(CommandType.ATTACK, "2");
-        	LockInCommand();
+            CreateCommand(CommandType.ATTACK, "2");
+            LockInCommand();
         }
         if(Input.GetKeyDown(LockAttack3CommandCode)) {
-        	CreateCommand(CommandType.ATTACK, "3");
-        	LockInCommand();
+            CreateCommand(CommandType.ATTACK, "3");
+            LockInCommand();
         }
         if(Input.GetKeyDown(LockAttack4CommandCode)) {
-        	CreateCommand(CommandType.ATTACK, "4");
-        	LockInCommand();
+            CreateCommand(CommandType.ATTACK, "4");
+            LockInCommand();
         }
 
         Vector3 moveVector = new Vector3(horizontal, 0, vertical);

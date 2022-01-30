@@ -21,6 +21,11 @@ public class HealthBar : MonoBehaviour
         StartCoroutine(HealthbarLerp(newHealth));
     }
 
+    public void SetHealthImmediate(int currentHealth)
+    {
+        Slider.value = currentHealth;
+    }
+
     IEnumerator HealthbarLerp(float newValue) {
         var startValue = Slider.value;
         float lerp = 0;

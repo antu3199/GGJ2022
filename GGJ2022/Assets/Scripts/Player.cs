@@ -15,20 +15,25 @@ public enum PlayerType
 public abstract class Player : MonoBehaviour
 {
     public PlayerType PlayerType;
+    public bool DisablePlayerInteraction{get; set;}
     public bool CanMove{get; set;}
     public bool IsUsingAbility{get; set;}
-    [SerializeField] protected CharacterController CharacterController;
+    public CharacterController CharacterController;
     public MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
     
     [SerializeField] HealthBar HealthBar;
+    [SerializeField] HealthBar ShieldBar;
+
     [SerializeField] Canvas HealthBarCanvas;
     [SerializeField] int TotalHealth;
     [SerializeField] float Armor;
+    [SerializeField] int InitialShield = 200;
     protected int CurrentHealth;
+    protected int CurrentShield;
     protected bool IsDead = false;
 
-    protected Vector3 PlayerVelocity;
+    public Vector3 PlayerVelocity;
     protected bool IsGrounded;
     public float PlayerSpeed = 3.0f;
     [SerializeField] protected float JumpHeight = 1.0f;
@@ -39,15 +44,21 @@ public abstract class Player : MonoBehaviour
     protected KeyCode LeftKeyCode = KeyCode.LeftArrow;
     protected KeyCode RightKeyCode = KeyCode.RightArrow;
 
+    public PlayerPlanSetter Planner;
+    public PlayerPlanExecutor Executor;
     public Player RedirectTarget {get; set;}
     public System.Action<float> DamageRedirector = null;
 
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
         CanMove = true;
+        DisablePlayerInteraction = false;
 
         CurrentHealth = TotalHealth;
+        CurrentShield = InitialShield;
         HealthBar.SetTotalHealth(TotalHealth);
+        ShieldBar.SetTotalHealth(TotalHealth);
+        ShieldBar.SetHealthImmediate(CurrentShield);
     }
 
     protected void Update()
@@ -89,7 +100,7 @@ public abstract class Player : MonoBehaviour
 
         RefreshAnimState();
 
-        if (!CanMove || IsDead)
+        if (!CanMove || DisablePlayerInteraction || IsDead)
         {
             moveVector = Vector3.zero;
         }
@@ -154,8 +165,23 @@ public abstract class Player : MonoBehaviour
             return;
         }
 
+        int curDamage = (int)damage;
+
+        if (curDamage <= CurrentShield)
+        {
+            CurrentShield -= curDamage;
+            ShieldBar.SetHealth(CurrentShield);
+            return;
+        }
+        else
+        {
+            curDamage -= CurrentShield;
+            CurrentShield = 0;
+            ShieldBar.SetHealth(CurrentShield);
+        }
+
         // Decrement the player's health based on the damage
-        CurrentHealth -= (int)damage;
+        CurrentHealth -= curDamage;
         HealthBar.SetHealth(CurrentHealth < 0 ? 0 : CurrentHealth);
 
         if (CurrentHealth <= 0) {
