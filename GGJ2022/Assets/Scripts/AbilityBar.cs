@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AbilityBar : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class AbilityBar : MonoBehaviour
 
     [SerializeField] Player Player; // The player who the ability bar belongs to
 
+    [SerializeField] List<TMP_Text> ShortcutTexts;
+
     void Start()
     {
         if (Player != null) {
@@ -28,6 +31,11 @@ public class AbilityBar : MonoBehaviour
         } else {
             Debug.Log("Ability bar doesn't have an assigned caster player");
         }
+
+        ShortcutTexts[0]?.SetText(Ability1Key.ToString().Substring(Ability1Key.ToString().Length - 1));
+        ShortcutTexts[1]?.SetText(Ability2Key.ToString().Substring(Ability2Key.ToString().Length - 1));
+        ShortcutTexts[2]?.SetText(Ability3Key.ToString().Substring(Ability3Key.ToString().Length - 1));
+        ShortcutTexts[3]?.SetText(UltimateAbilityKey.ToString().Substring(UltimateAbilityKey.ToString().Length - 1));
         
     }
 
