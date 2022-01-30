@@ -8,6 +8,13 @@ public class ShieldCollsionEffect : MonoBehaviour
 
     HashSet<Player> players = new HashSet<Player>();
 
+    public float Duration = 5f;
+
+    void Start()
+    {
+        StartCoroutine(WaitAndDestroy());
+    }
+
     public void ActivateShield(DefenderPlayer player)
     {
         defenderPlayer = player;
@@ -49,6 +56,13 @@ public class ShieldCollsionEffect : MonoBehaviour
         {
             player.DamageRedirector = null;
         }
+    }
+
+    IEnumerator WaitAndDestroy()
+    {
+        yield return new WaitForSeconds(Duration);
+
+        Destroy(this.gameObject);
     }
 
 }
