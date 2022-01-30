@@ -15,6 +15,12 @@ public class BlitzcrankHook : Ability
     {
         Debug.Log("Blitzcrank hook casted!");
         if (CasterPlayer == null) return;
+
+        // Check that the caster player is the Defender
+        if (CasterPlayer.tag == "Defender") {
+            CasterPlayer.DoUltimateAbility();
+        }
+
         GameManager gameManager = (GameManager)GameManager.Instance;
 
         if (gameManager == null) {

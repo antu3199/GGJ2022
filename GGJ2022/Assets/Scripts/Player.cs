@@ -18,7 +18,7 @@ public abstract class Player : MonoBehaviour
     public bool CanMove{get; set;}
     public bool IsUsingAbility{get; set;}
     [SerializeField] protected CharacterController CharacterController;
-    protected MyCharacterController MyCharacterController;
+    public MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
     
     [SerializeField] HealthBar HealthBar;
@@ -30,7 +30,7 @@ public abstract class Player : MonoBehaviour
 
     protected Vector3 PlayerVelocity;
     protected bool IsGrounded;
-    [SerializeField] protected float PlayerSpeed = 3.0f;
+    public float PlayerSpeed = 3.0f;
     [SerializeField] protected float JumpHeight = 1.0f;
     protected const float GravityValue = -9.81f;
 
