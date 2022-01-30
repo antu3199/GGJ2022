@@ -28,14 +28,32 @@ public class ShieldAnimationController : MonoBehaviour
 
     public void MoveToPlayer()
     {
-        
+        IsMovingToPlayer = true;
     }
 
 
     // Not best practice, but for time
     void Update()
     {
+        if (IsMovingToPlayer)
+        {
+            float thresh = 1f;
+            Vector3 attackerPosition = GameManager.Instance.GetAttackerPlayer().transform.position;
+            Vector3 defenderPosition = DefenderPlayer.transform.position;
 
+            float dist = Vector3.Distance(attackerPosition, defenderPosition);
+            if (dist > thresh)
+            {
+                Vector3 newPos = Vector3.Lerp(attackerPosition, defenderPosition, 0.05f * Time.deltaTime);
+                DefenderPlayer.PlayerVelocity = (attackerPosition - defenderPosition) * 5;
+            }
+            else
+            {
+                IsMovingToPlayer = false;
+                DefenderPlayer.PlayerVelocity = Vector3.zero;
+            }
+
+        }
     }
 
 

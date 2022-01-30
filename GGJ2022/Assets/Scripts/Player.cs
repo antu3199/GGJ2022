@@ -22,13 +22,17 @@ public abstract class Player : MonoBehaviour
     [SerializeField] protected Animator AnimationController;
     
     [SerializeField] HealthBar HealthBar;
+    [SerializeField] HealthBar ShieldBar;
+
     [SerializeField] Canvas HealthBarCanvas;
     [SerializeField] int TotalHealth;
     [SerializeField] float Armor;
+    [SerializeField] int InitialShield = 200;
     protected int CurrentHealth;
+    protected int CurrentShield;
     protected bool IsDead = false;
 
-    protected Vector3 PlayerVelocity;
+    public Vector3 PlayerVelocity;
     protected bool IsGrounded;
     public float PlayerSpeed = 3.0f;
     [SerializeField] protected float JumpHeight = 1.0f;
@@ -47,7 +51,10 @@ public abstract class Player : MonoBehaviour
         CanMove = true;
 
         CurrentHealth = TotalHealth;
+        CurrentShield = InitialShield;
         HealthBar.SetTotalHealth(TotalHealth);
+        ShieldBar.SetTotalHealth(TotalHealth);
+        ShieldBar.SetHealthImmediate(CurrentShield);
     }
 
     protected void Update()
@@ -154,8 +161,23 @@ public abstract class Player : MonoBehaviour
             return;
         }
 
+        int curDamage = (int)damage;
+
+        if (curDamage <= CurrentShield)
+        {
+            CurrentShield -= curDamage;
+            ShieldBar.SetHealth(CurrentShield);
+            return;
+        }
+        else
+        {
+            curDamage -= CurrentShield;
+            CurrentShield = 0;
+            ShieldBar.SetHealth(CurrentShield);
+        }
+
         // Decrement the player's health based on the damage
-        CurrentHealth -= (int)damage;
+        CurrentHealth -= curDamage;
         HealthBar.SetHealth(CurrentHealth < 0 ? 0 : CurrentHealth);
 
         if (CurrentHealth <= 0) {
