@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AttackerPlayer : Player
 {
-    // Damage for all the abilities
-    public float BasicAttackDamage = 50f;
 
+    public float Attack1Multiplier = 1;
+    
     void Start()
     {
         ForwardKeyCode = KeyCode.UpArrow;
