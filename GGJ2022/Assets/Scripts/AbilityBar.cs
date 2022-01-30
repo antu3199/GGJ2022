@@ -35,19 +35,19 @@ public class AbilityBar : MonoBehaviour
     {
         // Listen for ability taps using the keyboard shortcuts
         if (Input.GetKey(Ability1Key)) {
-            Ability1.DoAbility();
+            Ability1?.DoAbility();
         }
 
         if (Input.GetKey(Ability2Key)) {
-            Ability2.DoAbility();
+            Ability2?.DoAbility();
         }
 
         if (Input.GetKey(Ability3Key)) {
-            Ability3.DoAbility();
+            Ability3?.DoAbility();
         }
 
         if (Input.GetKey(UltimateAbilityKey)) {
-            UltimateAbility.DoAbility();
+            UltimateAbility?.DoAbility();
         }
     }
 

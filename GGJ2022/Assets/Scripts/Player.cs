@@ -2,11 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum PlayerType
+{
+    ATTACKER,
+    DEFENDER
+};
+
 /*
  * THe abstract player class, that the defender and attacker extend from
 */
 public abstract class Player : MonoBehaviour
 {
+    public PlayerType PlayerType;
     [SerializeField] protected CharacterController CharacterController;
     protected MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
@@ -75,7 +83,20 @@ public abstract class Player : MonoBehaviour
 
         // We have to make the healthbar's rotation the reverse of the player, so the healthbar stays facing forward
         if (HealthBarCanvas != null) {
-            HealthBarCanvas.transform.rotation = Quaternion.Euler(0, transform.rotation.y * -1f, 0);
+            Vector3 cameraPosition;
+            if (PlayerType == PlayerType.ATTACKER)
+            {
+                cameraPosition = GameManager.Instance.AttackerCamera.transform.position;
+            }
+            else if (PlayerType == PlayerType.DEFENDER)
+            {
+                cameraPosition = GameManager.Instance.DefenderCamera.transform.position;
+            }
+            else
+            {
+                cameraPosition = Camera.main.transform.position;
+            }
+            HealthBarCanvas.transform.rotation = Quaternion.LookRotation(transform.position - cameraPosition, Vector3.up);
         }
     }
 

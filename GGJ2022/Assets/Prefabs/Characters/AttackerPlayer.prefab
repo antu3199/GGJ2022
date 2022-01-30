@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88486ea71f664b14a8575562b77d83fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerType: 0
   CharacterController: {fileID: 722506436555791180}
   AnimationController: {fileID: 8465987813919406319}
   HealthBar: {fileID: 1873168565947515996}

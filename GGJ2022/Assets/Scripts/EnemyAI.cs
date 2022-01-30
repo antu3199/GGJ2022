@@ -87,7 +87,25 @@ public class EnemyAI : MonoBehaviour, IPausable
     {
         // We have to make the healthbar's rotation the reverse of the enemy, so the healthbar stays facing forward
         if (HealthBarCanvas != null) {
-            HealthBarCanvas.transform.rotation = Quaternion.Euler(0, transform.rotation.y * -1f, 0);
+            // Find the closest player, and look at their direction
+            Vector3 attackerPos = GameManager.Instance.GetAttackerPlayer().transform.position;
+            Vector3 defenderPos = GameManager.Instance.GetDefenderPlayer().transform.position;
+
+
+            float attackerDist = Vector3.Distance(attackerPos, transform.position);
+            float defenderDist = Vector3.Distance(attackerPos, transform.position);
+
+            Vector3 locationToUse;
+            if (attackerDist <= defenderDist)
+            {
+                locationToUse = GameManager.Instance.AttackerCamera.transform.position;
+            }
+            else
+            {
+                locationToUse = GameManager.Instance.DefenderCamera.transform.position;
+            }
+
+            HealthBarCanvas.transform.rotation = Quaternion.LookRotation(transform.position - locationToUse, Vector3.up);
         }
     }
 
