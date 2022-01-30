@@ -15,9 +15,10 @@ public enum PlayerType
 public abstract class Player : MonoBehaviour
 {
     public PlayerType PlayerType;
+    public bool DisablePlayerInteraction{get; set;}
     public bool CanMove{get; set;}
     public bool IsUsingAbility{get; set;}
-    [SerializeField] protected CharacterController CharacterController;
+    public CharacterController CharacterController;
     public MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
     
@@ -38,9 +39,13 @@ public abstract class Player : MonoBehaviour
     protected KeyCode LeftKeyCode = KeyCode.LeftArrow;
     protected KeyCode RightKeyCode = KeyCode.RightArrow;
 
+    public PlayerPlanSetter Planner;
+    public PlayerPlanExecutor Executor;
+
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
         CanMove = true;
+        DisablePlayerInteraction = false;
 
         CurrentHealth = TotalHealth;
         HealthBar.SetTotalHealth(TotalHealth);
@@ -85,7 +90,7 @@ public abstract class Player : MonoBehaviour
 
         RefreshAnimState();
 
-        if (!CanMove)
+        if (!CanMove || DisablePlayerInteraction)
         {
             moveVector = Vector3.zero;
         }

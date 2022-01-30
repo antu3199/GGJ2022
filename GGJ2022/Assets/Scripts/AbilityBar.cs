@@ -16,7 +16,13 @@ public class AbilityBar : MonoBehaviour
     [SerializeField] Ability Ability3;
     [SerializeField] Ability UltimateAbility;
 
-    [SerializeField] Player Player; // The player who the ability bar belongs to
+    public Player Player; // The player who the ability bar belongs to
+
+    void Awake() 
+    {
+        GamePhaseManager gpm = GamePhaseManager.Instance;
+        gpm.Attach(this);
+    }
 
     void Start()
     {
