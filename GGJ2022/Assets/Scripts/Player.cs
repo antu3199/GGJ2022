@@ -2,11 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum PlayerType
+{
+    ATTACKER,
+    DEFENDER
+};
+
 /*
  * THe abstract player class, that the defender and attacker extend from
 */
 public abstract class Player : MonoBehaviour
 {
+    public PlayerType PlayerType;
+    public bool CanMove{get; set;}
+    public bool IsUsingAbility{get; set;}
     [SerializeField] protected CharacterController CharacterController;
     protected MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
@@ -30,6 +40,7 @@ public abstract class Player : MonoBehaviour
 
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
+        CanMove = true;
 
         CurrentHealth = TotalHealth;
         HealthBar.SetTotalHealth(TotalHealth);
@@ -44,6 +55,11 @@ public abstract class Player : MonoBehaviour
         IsGrounded = CharacterController.isGrounded;
         if (IsGrounded && PlayerVelocity.y < 0) {
             PlayerVelocity.y = 0f;
+        }
+        
+        if (!IsGrounded)
+        {
+            PlayerVelocity.y += -9.8f; // Add some gravity to prevent glitching
         }
 
         float vertical = 0;
@@ -67,7 +83,14 @@ public abstract class Player : MonoBehaviour
 
         Vector3 moveVector = new Vector3(horizontal, 0, vertical);
 
-        MyCharacterController.Move(moveVector * Time.deltaTime * PlayerSpeed);
+        RefreshAnimState();
+
+        if (!CanMove)
+        {
+            moveVector = Vector3.zero;
+        }
+
+        MyCharacterController.Move((PlayerVelocity + moveVector * PlayerSpeed) * Time.deltaTime);
 
         if (moveVector != Vector3.zero) {
             gameObject.transform.forward = moveVector;
@@ -75,7 +98,20 @@ public abstract class Player : MonoBehaviour
 
         // We have to make the healthbar's rotation the reverse of the player, so the healthbar stays facing forward
         if (HealthBarCanvas != null) {
-            HealthBarCanvas.transform.rotation = Quaternion.Euler(0, transform.rotation.y * -1f, 0);
+            Vector3 cameraPosition;
+            if (PlayerType == PlayerType.ATTACKER)
+            {
+                cameraPosition = GameManager.Instance.AttackerCamera.transform.position;
+            }
+            else if (PlayerType == PlayerType.DEFENDER)
+            {
+                cameraPosition = GameManager.Instance.DefenderCamera.transform.position;
+            }
+            else
+            {
+                cameraPosition = Camera.main.transform.position;
+            }
+            HealthBarCanvas.transform.rotation = Quaternion.LookRotation(transform.position - cameraPosition, Vector3.up);
         }
     }
 
@@ -85,6 +121,18 @@ public abstract class Player : MonoBehaviour
 
     public bool IsDoingBasicAttack() {
         return MyCharacterController.IsDoingBasicAttack();
+    }
+
+    // Hacky way to Refresh anim state so it doesn't get stuck just in case
+    public void RefreshAnimState()
+    {
+        bool NeedsRefresh = CanMove == false || IsUsingAbility == true;
+        if (NeedsRefresh && MyCharacterController.IsIdleOrWalking())
+        {
+            CanMove = true;
+            IsUsingAbility = false;
+            Debug.Log("Refresh state");
+        }
     }
 
 

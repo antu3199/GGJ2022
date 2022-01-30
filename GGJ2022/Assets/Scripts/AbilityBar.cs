@@ -34,20 +34,27 @@ public class AbilityBar : MonoBehaviour
     void Update()
     {
         // Listen for ability taps using the keyboard shortcuts
-        if (Input.GetKey(Ability1Key)) {
-            Ability1.DoAbility();
+        if (!Player.IsUsingAbility)
+        {
+            if (Input.GetKeyDown(Ability1Key)) {
+                Ability1?.DoAbility();
+            }
+    
+            if (Input.GetKeyDown(Ability2Key)) {
+                Ability2?.DoAbility();
+            }
+    
+            if (Input.GetKeyDown(Ability3Key)) {
+                Ability3?.DoAbility();
+            }
+    
+            if (Input.GetKeyDown(UltimateAbilityKey)) {
+                UltimateAbility?.DoAbility();
+            }
         }
-
-        if (Input.GetKey(Ability2Key)) {
-            Ability2.DoAbility();
-        }
-
-        if (Input.GetKey(Ability3Key)) {
-            Ability3.DoAbility();
-        }
-
-        if (Input.GetKey(UltimateAbilityKey)) {
-            UltimateAbility.DoAbility();
+        else
+        {
+            Player.RefreshAnimState();
         }
     }
 
