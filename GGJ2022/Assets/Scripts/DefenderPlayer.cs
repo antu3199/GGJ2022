@@ -25,14 +25,23 @@ public class DefenderPlayer : Player
     }
 
     public override void DoAbility2() {
-
+        if (AnimationController != null) {
+            AnimationController.ResetTrigger("DoRunAndBlock");
+            AnimationController.SetTrigger("DoRunAndBlock");
+        }
     }
 
     public override void DoAbility3() {
-
+        if (AnimationController != null) {
+            AnimationController.ResetTrigger("DoShieldBash");
+            AnimationController.SetTrigger("DoShieldBash");
+        }
     }
 
     public override void DoUltimateAbility() {
-
+        if (AnimationController != null) {
+            AnimationController.ResetTrigger("DoBlitzcrankHook");
+            AnimationController.SetTrigger("DoBlitzcrankHook");
+        }
     }
 }

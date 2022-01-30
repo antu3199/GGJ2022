@@ -21,13 +21,13 @@ public class AnimPauser: MonoBehaviour, IPausable
 	public void AttachPausable()
 	{
 		PauseController pauser = (PauseController)PauseController.Instance;
-        pauser.Attach(this.gameObject, this);
+        pauser?.Attach(this.gameObject, this);
 	}
 
 	public void DetachPausable()
 	{
 		PauseController pauser = (PauseController)PauseController.Instance;
-        pauser.Detach(this.gameObject, this);
+        pauser?.Detach(this.gameObject, this);
 	}
 
 	public void Pause()
