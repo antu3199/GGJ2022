@@ -15,6 +15,8 @@ public enum PlayerType
 public abstract class Player : MonoBehaviour
 {
     public PlayerType PlayerType;
+    public bool CanMove{get; set;}
+    public bool IsUsingAbility{get; set;}
     [SerializeField] protected CharacterController CharacterController;
     protected MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
@@ -38,6 +40,7 @@ public abstract class Player : MonoBehaviour
 
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
+        CanMove = true;
 
         CurrentHealth = TotalHealth;
         HealthBar.SetTotalHealth(TotalHealth);
@@ -75,6 +78,13 @@ public abstract class Player : MonoBehaviour
 
         Vector3 moveVector = new Vector3(horizontal, 0, vertical);
 
+        RefreshAnimState();
+
+        if (!CanMove)
+        {
+            moveVector = Vector3.zero;
+        }
+
         MyCharacterController.Move(moveVector * Time.deltaTime * PlayerSpeed);
 
         if (moveVector != Vector3.zero) {
@@ -106,6 +116,18 @@ public abstract class Player : MonoBehaviour
 
     public bool IsDoingBasicAttack() {
         return MyCharacterController.IsDoingBasicAttack();
+    }
+
+    // Hacky way to Refresh anim state so it doesn't get stuck just in case
+    public void RefreshAnimState()
+    {
+        bool NeedsRefresh = CanMove == false || IsUsingAbility == true;
+        if (NeedsRefresh && MyCharacterController.IsIdleOrWalking())
+        {
+            CanMove = true;
+            IsUsingAbility = false;
+            Debug.Log("Refresh state");
+        }
     }
 
 

@@ -6,7 +6,7 @@ public class AttackerPlayer : Player
 {
 
     public float Attack1Multiplier = 1;
-    
+
     void Start()
     {
         ForwardKeyCode = KeyCode.UpArrow;

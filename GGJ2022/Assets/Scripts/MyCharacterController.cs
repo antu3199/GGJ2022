@@ -44,6 +44,12 @@ public class MyCharacterController
         return GetAnimatorStateInfo().IsName("Basic Attack");
     }
 
+    public virtual bool IsIdleOrWalking()
+    {
+        AnimatorStateInfo animInfo = GetAnimatorStateInfo();
+        return animInfo.IsName("Idle") || animInfo.IsName("Walk Start") || animInfo.IsName("Walk Loop");
+    }
+
     public virtual void DoAttackAnimation() {
         if (_animationController != null) {
             _animationController.ResetTrigger("DoAttack");
