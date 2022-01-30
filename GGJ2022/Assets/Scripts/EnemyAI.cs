@@ -94,9 +94,8 @@ public class EnemyAI : MonoBehaviour, IPausable
             Vector3 attackerPos = GameManager.Instance.GetAttackerPlayer().transform.position;
             Vector3 defenderPos = GameManager.Instance.GetDefenderPlayer().transform.position;
 
-
             float attackerDist = Vector3.Distance(attackerPos, transform.position);
-            float defenderDist = Vector3.Distance(attackerPos, transform.position);
+            float defenderDist = Vector3.Distance(defenderPos, transform.position);
 
             Vector3 locationToUse;
             if (attackerDist <= defenderDist)
