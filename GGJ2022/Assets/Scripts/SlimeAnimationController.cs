@@ -9,5 +9,6 @@ public class SlimeAnimationController : MonoBehaviour
     public void SetIsAttacking(int Enabled)
     {
         Enemy.IsAttacking = Enabled == 0 ? false : true;
+        Enemy.HasHit = false;
     }
 }

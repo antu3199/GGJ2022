@@ -74,6 +74,9 @@ public class EnemyAI : MonoBehaviour, IPausable
     protected Vector3 EnemyVelocity;
     protected bool IsGrounded;
 
+    public bool HasHit{get; set;}
+
+
     void Awake() 
     {
         fov = GetComponent<FieldOfView>();
@@ -363,9 +366,10 @@ public class EnemyAI : MonoBehaviour, IPausable
         // Use events to determine whether or not to do damage
         if (IsAttacking) {
             // Check if the slime collided with a player
-            if (hit.gameObject.tag == "Attacker" || hit.gameObject.tag == "Defender") {
+            if (!HasHit && (hit.gameObject.tag == "Attacker" || hit.gameObject.tag == "Defender")) {
                 Player player = (Player)hit.gameObject.GetComponentInChildren<Player>();
                 player.GetAttacked(player.CalculateDamageTaken(Damage));
+                HasHit = true; // Don't attack multiple times
             }
         }
     }
