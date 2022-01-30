@@ -46,6 +46,9 @@ public class EnemyAI : MonoBehaviour, IPausable
     [SerializeField] int TotalHealth;
     protected int CurrentHealth;
 
+    public bool IsAttacking{get; set;}
+    [SerializeField] float Damage;
+
     protected bool isGrounded;
     [SerializeField] protected float playerSpeed;
     [SerializeField] protected float jumpHeight;
@@ -132,13 +135,13 @@ public class EnemyAI : MonoBehaviour, IPausable
     public void AttachPausable()
     {
         PauseController pauser = (PauseController)PauseController.Instance;
-        pauser.Attach(this.gameObject, this);
+        pauser?.Attach(this.gameObject, this);
     }
 
     public void DetachPausable()
     {
         PauseController pauser = (PauseController)PauseController.Instance;
-        pauser.Detach(this.gameObject, this);
+        pauser?.Detach(this.gameObject, this);
     }
 
     public void Pause()
@@ -355,13 +358,26 @@ public class EnemyAI : MonoBehaviour, IPausable
         yield return null;
     }
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // Use events to determine whether or not to do damage
+        if (IsAttacking) {
+            // Check if the slime collided with a player
+            if (hit.gameObject.tag == "Attacker" || hit.gameObject.tag == "Defender") {
+                Debug.Log("Enemy attacking player detected");
+                Player player = (Player)hit.gameObject.GetComponentInChildren<Player>();
+                player.GetAttacked(player.CalculateDamageTaken(Damage));
+            }
+        }
+    }
+
     public void GetAttacked(float damage) {
         // When the enemy's attacked, it'll turn red for 0.2s
         StartCoroutine(ApplyAttackedMaterial());
 
         // Decrement the enemy's health based on the damage
         CurrentHealth -= (int)damage;
-        HealthBar.SetHealth(CurrentHealth);
+        HealthBar.SetHealth(CurrentHealth < 0 ? 0 : CurrentHealth);
 
         if (CurrentHealth <= 0) {
             if (!isDead) {

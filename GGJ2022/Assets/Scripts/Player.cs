@@ -23,12 +23,17 @@ public abstract class Player : MonoBehaviour
     [SerializeField] protected Animator AnimationController;
     
     [SerializeField] HealthBar HealthBar;
+    [SerializeField] HealthBar ShieldBar;
+
     [SerializeField] Canvas HealthBarCanvas;
     [SerializeField] int TotalHealth;
     [SerializeField] float Armor;
+    [SerializeField] int InitialShield = 200;
     protected int CurrentHealth;
+    protected int CurrentShield;
+    protected bool IsDead = false;
 
-    protected Vector3 PlayerVelocity;
+    public Vector3 PlayerVelocity;
     protected bool IsGrounded;
     public float PlayerSpeed = 3.0f;
     [SerializeField] protected float JumpHeight = 1.0f;
@@ -41,6 +46,8 @@ public abstract class Player : MonoBehaviour
 
     public PlayerPlanSetter Planner;
     public PlayerPlanExecutor Executor;
+    public Player RedirectTarget {get; set;}
+    public System.Action<float> DamageRedirector = null;
 
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
@@ -48,7 +55,10 @@ public abstract class Player : MonoBehaviour
         DisablePlayerInteraction = false;
 
         CurrentHealth = TotalHealth;
+        CurrentShield = InitialShield;
         HealthBar.SetTotalHealth(TotalHealth);
+        ShieldBar.SetTotalHealth(TotalHealth);
+        ShieldBar.SetHealthImmediate(CurrentShield);
     }
 
     protected void Update()
@@ -90,7 +100,7 @@ public abstract class Player : MonoBehaviour
 
         RefreshAnimState();
 
-        if (!CanMove || DisablePlayerInteraction)
+        if (!CanMove || DisablePlayerInteraction || IsDead)
         {
             moveVector = Vector3.zero;
         }
@@ -137,6 +147,69 @@ public abstract class Player : MonoBehaviour
             CanMove = true;
             IsUsingAbility = false;
             Debug.Log("Refresh state");
+        }
+    }
+
+    // Calculate the damage taken based on the player's armor
+    public float CalculateDamageTaken(float damage) {
+        if (Armor < 0) return damage;
+
+        return damage * (100 / (100 + Armor));
+    }
+
+    public void GetAttacked(float damage, bool ignoreRedirector = false) {
+        if (DamageRedirector != null && !ignoreRedirector && RedirectTarget.IsDead == false)
+        {
+            // Redirects the damage
+            DamageRedirector(damage);
+            return;
+        }
+
+        int curDamage = (int)damage;
+
+        if (curDamage <= CurrentShield)
+        {
+            CurrentShield -= curDamage;
+            ShieldBar.SetHealth(CurrentShield);
+            return;
+        }
+        else
+        {
+            curDamage -= CurrentShield;
+            CurrentShield = 0;
+            ShieldBar.SetHealth(CurrentShield);
+        }
+
+        // Decrement the player's health based on the damage
+        CurrentHealth -= curDamage;
+        HealthBar.SetHealth(CurrentHealth < 0 ? 0 : CurrentHealth);
+
+        if (CurrentHealth <= 0) {
+            if (!IsDead) {
+                IsDead = true;
+                CanMove = false;
+
+                // todo: Go into dead state, and do some death pfx and then destroy this object
+                MyCharacterController.Death();
+
+                StartCoroutine(SinkIntoGround());
+            }
+        }
+    }
+
+    IEnumerator SinkIntoGround() {
+        float sinkDuration = 1.5f;
+        float timePassed = 0f;
+
+        // Only start sinking into the ground after the animation is done (15 frames for the player)
+        for (int i=0; i < 15; i++) {
+            yield return null;
+        }
+
+        while (timePassed < sinkDuration) {
+            this.transform.position += new Vector3(0, -0.05f, 0);
+            timePassed += Time.deltaTime;
+            yield return null;
         }
     }
 
