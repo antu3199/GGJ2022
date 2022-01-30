@@ -46,6 +46,9 @@ public class EnemyAI : MonoBehaviour, IPausable
     [SerializeField] int TotalHealth;
     protected int CurrentHealth;
 
+    public bool IsAttacking{get; set;}
+    [SerializeField] float Damage;
+
     protected bool isGrounded;
     [SerializeField] protected float playerSpeed;
     [SerializeField] protected float jumpHeight;
@@ -353,6 +356,19 @@ public class EnemyAI : MonoBehaviour, IPausable
         yield return new WaitForFixedUpdate();
         this.currentState = AiStateMachine.CHASE;
         yield return null;
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // Use events to determine whether or not to do damage
+        if (IsAttacking) {
+            // Check if the slime collided with a player
+            if (hit.gameObject.tag == "Attacker" || hit.gameObject.tag == "Defender") {
+                Debug.Log("Enemy attacking player detected");
+                Player player = (Player)hit.gameObject.GetComponentInChildren<Player>();
+                player.GetAttacked(player.CalculateDamageTaken(Damage));
+            }
+        }
     }
 
     public void GetAttacked(float damage) {

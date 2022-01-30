@@ -74,6 +74,7 @@ MonoBehaviour:
   HealthBar: {fileID: 6694471811221792292}
   HealthBarCanvas: {fileID: 8978878334711905763}
   TotalHealth: 300
+  Damage: 500
   playerSpeed: 4
   jumpHeight: 1
   turnSpeedInDegPerSec: 90
@@ -400,3 +401,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e99e859d4ad43cb843939ea8f180b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2793092916540458997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8025396141684276127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab59889e1cdc8504bac862687e4cf7bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 4927077200529396034}

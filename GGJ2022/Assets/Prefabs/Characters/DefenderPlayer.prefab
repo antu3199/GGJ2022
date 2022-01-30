@@ -70,7 +70,7 @@ MonoBehaviour:
   HealthBar: {fileID: 8295577861460806435}
   HealthBarCanvas: {fileID: 2863134675238743323}
   TotalHealth: 1000
-  Armor: 0
+  Armor: 50
   PlayerSpeed: 3
   JumpHeight: 1
 --- !u!1 &8774439398459985989

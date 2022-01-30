@@ -26,6 +26,7 @@ public abstract class Player : MonoBehaviour
     [SerializeField] int TotalHealth;
     [SerializeField] float Armor;
     protected int CurrentHealth;
+    protected bool IsDead = false;
 
     protected Vector3 PlayerVelocity;
     protected bool IsGrounded;
@@ -85,7 +86,7 @@ public abstract class Player : MonoBehaviour
 
         RefreshAnimState();
 
-        if (!CanMove)
+        if (!CanMove || IsDead)
         {
             moveVector = Vector3.zero;
         }
@@ -132,6 +133,47 @@ public abstract class Player : MonoBehaviour
             CanMove = true;
             IsUsingAbility = false;
             Debug.Log("Refresh state");
+        }
+    }
+
+    // Calculate the damage taken based on the player's armor
+    public float CalculateDamageTaken(float damage) {
+        if (Armor < 0) return damage;
+
+        return damage * (100 / (100 + Armor));
+    }
+
+    public void GetAttacked(float damage) {
+        // Decrement the player's health based on the damage
+        CurrentHealth -= (int)damage;
+        HealthBar.SetHealth(CurrentHealth);
+
+        if (CurrentHealth <= 0) {
+            if (!IsDead) {
+                IsDead = true;
+                CanMove = false;
+
+                // todo: Go into dead state, and do some death pfx and then destroy this object
+                MyCharacterController.Death();
+
+                StartCoroutine(SinkIntoGround());
+            }
+        }
+    }
+
+    IEnumerator SinkIntoGround() {
+        float sinkDuration = 1.5f;
+        float timePassed = 0f;
+
+        // Only start sinking into the ground after the animation is done (15 frames for the player)
+        for (int i=0; i < 15; i++) {
+            yield return null;
+        }
+
+        while (timePassed < sinkDuration) {
+            this.transform.position += new Vector3(0, -0.05f, 0);
+            timePassed += Time.deltaTime;
+            yield return null;
         }
     }
 
