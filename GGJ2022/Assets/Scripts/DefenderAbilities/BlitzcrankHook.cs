@@ -32,6 +32,14 @@ public class BlitzcrankHook : Ability
         EnemyAI furthestEnemy = gameManager.GetEnemyPool().GetFurthestEnemyFromPlayer(CasterPlayer);
 
         if (furthestEnemy != null) {
+            // Make the player face in the direction of the furthest enemy, so it's throwing the shield to the enemy
+            int damping = 2;
+            Vector3 lookPos = furthestEnemy.gameObject.transform.position - CasterPlayer.gameObject.transform.position;
+            lookPos.y = 0;
+
+            var rotation = Quaternion.LookRotation(lookPos);
+            CasterPlayer.gameObject.transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping); 
+
             StartCoroutine(PullEnemyCoroutine(furthestEnemy));
         } else {
             // What to do if blitz hook is used when no enemies are there?
@@ -41,6 +49,8 @@ public class BlitzcrankHook : Ability
 
     private IEnumerator PullEnemyCoroutine(EnemyAI enemy) {
         if (enemy == null) yield break;
+
+        yield return new WaitForSeconds(0.5f); // for the enemy to turn to the slime
 
         while (true) {
             // https://handyopinion.com/move-gameobject-to-another-with-speed-variation-in-unity/
