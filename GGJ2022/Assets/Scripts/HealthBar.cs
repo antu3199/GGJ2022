@@ -15,7 +15,7 @@ public class HealthBar : MonoBehaviour
     }
 
     public void SetHealth(int newHealth) {
-        if (newHealth <= 0) return;
+        if (newHealth < 0) return;
         
         // Lerp the slider to the new health
         StartCoroutine(HealthbarLerp(newHealth));
