@@ -15,9 +15,10 @@ public enum PlayerType
 public abstract class Player : MonoBehaviour
 {
     public PlayerType PlayerType;
+    public bool DisablePlayerInteraction{get; set;}
     public bool CanMove{get; set;}
     public bool IsUsingAbility{get; set;}
-    [SerializeField] protected CharacterController CharacterController;
+    public CharacterController CharacterController;
     public MyCharacterController MyCharacterController;
     [SerializeField] protected Animator AnimationController;
     
@@ -43,12 +44,15 @@ public abstract class Player : MonoBehaviour
     protected KeyCode LeftKeyCode = KeyCode.LeftArrow;
     protected KeyCode RightKeyCode = KeyCode.RightArrow;
 
+    public PlayerPlanSetter Planner;
+    public PlayerPlanExecutor Executor;
     public Player RedirectTarget {get; set;}
     public System.Action<float> DamageRedirector = null;
 
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
         CanMove = true;
+        DisablePlayerInteraction = false;
 
         CurrentHealth = TotalHealth;
         CurrentShield = InitialShield;
@@ -96,7 +100,7 @@ public abstract class Player : MonoBehaviour
 
         RefreshAnimState();
 
-        if (!CanMove || IsDead)
+        if (!CanMove || DisablePlayerInteraction || IsDead)
         {
             moveVector = Vector3.zero;
         }
