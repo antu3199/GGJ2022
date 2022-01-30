@@ -997,7 +997,7 @@ MonoBehaviour:
   DefenderShield: {fileID: 3602644447959914561}
   shieldPrefab: {fileID: 3853410875643035746, guid: a67427e6239dca8409321f210064d86f, type: 3}
   MovementSpeed: 5
-  ShieldHealth: 400
+  ShieldHealth: 350
 --- !u!1001 &2853001401890091066
 PrefabInstance:
   m_ObjectHideFlags: 0
