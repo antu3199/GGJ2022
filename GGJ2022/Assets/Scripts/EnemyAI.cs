@@ -8,6 +8,7 @@ public enum AiStateMachine {
     TURN,
     WALK,
     STUNNED,
+    DEAD, 
     // AGGRO STATES
     CHASE,
     ATTACK
@@ -132,51 +133,57 @@ public class EnemyAI : MonoBehaviour, IPausable
         AiStateMachine previousState = AiStateMachine.LOOK;
         while(true)
         {   
-            // Aggro Check
-            bool inAggro = isAggro();
-            if(inAggro) {
-                if(previousState == AiStateMachine.LOOK || 
-                 previousState == AiStateMachine.TURN ||
-                 previousState == AiStateMachine.WALK) {
-                    this.currentState = AiStateMachine.CHASE;
-                    StopCoroutine(routine);
-                    this.routine = StartCoroutine(Chase(fov.Visible, playerSpeed, turnSpeedInDegPerSec, chaseDuration));
+            // If the enemy is dead, we don't want to do any more movements
+            if (this.currentState != AiStateMachine.DEAD) {
+                // Aggro Check
+                bool inAggro = isAggro();
+                if(inAggro) {
+                    if(previousState == AiStateMachine.LOOK || 
+                    previousState == AiStateMachine.TURN ||
+                    previousState == AiStateMachine.WALK) {
+                        this.currentState = AiStateMachine.CHASE;
+                        StopCoroutine(routine);
+                        this.routine = StartCoroutine(Chase(fov.Visible, playerSpeed, turnSpeedInDegPerSec, chaseDuration));
+                    }
+                    else if(previousState == AiStateMachine.CHASE &&
+                        this.currentState == AiStateMachine.ATTACK) {
+                        StopCoroutine(routine);
+                        this.routine = StartCoroutine(Attack(aggroTarget));
+                    }
+                    else if(previousState == AiStateMachine.ATTACK &&
+                        this.currentState == AiStateMachine.CHASE)
+                    {
+                        StopCoroutine(routine);
+                        this.routine = StartCoroutine(Chase(fov.Visible, playerSpeed, turnSpeedInDegPerSec, chaseDuration));
+                    }
                 }
-                else if(previousState == AiStateMachine.CHASE &&
-                    this.currentState == AiStateMachine.ATTACK) {
-                    StopCoroutine(routine);
-                    this.routine = StartCoroutine(Attack(aggroTarget));
-                }
-                else if(previousState == AiStateMachine.ATTACK &&
-                    this.currentState == AiStateMachine.CHASE)
+                else 
                 {
-                    StopCoroutine(routine);
-                    this.routine = StartCoroutine(Chase(fov.Visible, playerSpeed, turnSpeedInDegPerSec, chaseDuration));
+                    if(previousState == AiStateMachine.LOOK &&
+                        this.currentState == AiStateMachine.TURN) {
+                        StopCoroutine(routine);
+                        this.routine = StartCoroutine(Turn(this.nextLookDirection, turnSpeedInDegPerSec));
+                    }
+                    else if(previousState == AiStateMachine.TURN &&
+                        this.currentState == AiStateMachine.WALK) {
+                        StopCoroutine(routine);
+                        this.routine = StartCoroutine(Walk(playerSpeed));
+                    }
+                    else if(previousState == AiStateMachine.WALK &&
+                        this.currentState == AiStateMachine.LOOK) {
+                        StopCoroutine(routine);
+                        this.routine = StartCoroutine(Look(1));
+                    }
+                    else if(previousState == AiStateMachine.CHASE)
+                    {
+                        this.currentState = AiStateMachine.LOOK;
+                        StopCoroutine(routine);
+                        this.routine = StartCoroutine(Look(1));
+                    }
                 }
-            }
-            else 
-            {
-                if(previousState == AiStateMachine.LOOK &&
-                    this.currentState == AiStateMachine.TURN) {
-                    StopCoroutine(routine);
-                    this.routine = StartCoroutine(Turn(this.nextLookDirection, turnSpeedInDegPerSec));
-                }
-                else if(previousState == AiStateMachine.TURN &&
-                    this.currentState == AiStateMachine.WALK) {
-                    StopCoroutine(routine);
-                    this.routine = StartCoroutine(Walk(playerSpeed));
-                }
-                else if(previousState == AiStateMachine.WALK &&
-                    this.currentState == AiStateMachine.LOOK) {
-                    StopCoroutine(routine);
-                    this.routine = StartCoroutine(Look(1));
-                }
-                else if(previousState == AiStateMachine.CHASE)
-                {
-                    this.currentState = AiStateMachine.LOOK;
-                    StopCoroutine(routine);
-                    this.routine = StartCoroutine(Look(1));
-                }
+            } else {
+                // If we are dead, then stop whatever routine is running
+                StopCoroutine(routine);
             }
 
             //... TODO
@@ -248,7 +255,9 @@ public class EnemyAI : MonoBehaviour, IPausable
         Vector3 toWalkTo = transform.position + transform.forward * distance;
         while(Vector3.SqrMagnitude(transform.position - toWalkTo) >= this.characterController.radius)
         {
-            this.myCharacterController.Move(transform.forward * Time.fixedDeltaTime * speed * this.slowPercentage);
+            if (!isDead) {
+                this.myCharacterController.Move(transform.forward * Time.fixedDeltaTime * speed * this.slowPercentage);
+            }
             yield return new WaitForFixedUpdate();
         }
 
@@ -282,10 +291,14 @@ public class EnemyAI : MonoBehaviour, IPausable
             float updateTime = Time.fixedDeltaTime * this.slowPercentage;
             Vector3 direction = (toChase.transform.position - transform.position).normalized;
             float singleStep = (turnSpeedInDegPerSec * Mathf.Deg2Rad) * updateTime;
-            // Turn the character
-            transform.forward = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
-            // Move the character
-            this.myCharacterController.Move(direction * speed * updateTime);
+
+            if (!isDead) {
+                // Turn the character
+                transform.forward = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
+                // Move the character
+                this.myCharacterController.Move(direction * speed * updateTime);
+            }
+    
             yield return new WaitForFixedUpdate();
             accTime += updateTime;
         }
@@ -321,7 +334,8 @@ public class EnemyAI : MonoBehaviour, IPausable
         if (CurrentHealth <= 0) {
             if (!isDead) {
                 isDead = true;
-                
+                this.currentState = AiStateMachine.DEAD;
+
                 // todo: Go into dead state, and do some death pfx and then destroy this object
                 myCharacterController.Death();
 
