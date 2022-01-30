@@ -24,11 +24,12 @@ public class MoveLine : MonoBehaviour {
         _state = LineState.FOLLOW;
     }
 
-    public void Lock() {
+    public Vector3 Lock() {
         _endPos = _follow.position;
         _line.SetPosition(0, _startPos);
         _line.SetPosition(1, _endPos);
         _state = LineState.STATIC;
+        return _endPos;
     }
 
     public void Unlock() {

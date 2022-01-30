@@ -20,18 +20,6 @@ public class PauseController: Global<PauseController>
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("a"))
-        {
-            ResetAll();
-        }
-        if (Input.GetKeyDown("s"))
-        {
-            SlowAll();
-        }
-        if (Input.GetKeyDown("d"))
-        {
-            PauseAll();
-        }
     }
 
     // Let the Pause Controller know that obj can be paused
