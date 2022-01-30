@@ -40,7 +40,7 @@ public class MyCharacterController
         return _animationController.GetCurrentAnimatorStateInfo(0);
     }
 
-    public virtual bool IsAttacking() {
+    public virtual bool IsDoingBasicAttack() {
         return GetAnimatorStateInfo().IsName("Basic Attack");
     }
 

@@ -33,6 +33,16 @@ public class EnemyAI : MonoBehaviour, IPausable
     [SerializeField] protected CharacterController characterController;
     protected MyCharacterController myCharacterController;
     [SerializeField] protected FieldOfView fov;
+
+    [SerializeField] protected Material DefaultMaterial;
+    [SerializeField] protected Material AttackedMaterial; // Enemy changes to red when it gets hit
+    [SerializeField] protected SkinnedMeshRenderer MeshRenderer;
+
+    [SerializeField] HealthBar HealthBar;
+    [SerializeField] Canvas HealthBarCanvas;
+    [SerializeField] int TotalHealth;
+    protected int CurrentHealth;
+
     protected bool isGrounded;
     [SerializeField] protected float playerSpeed;
     [SerializeField] protected float jumpHeight;
@@ -60,10 +70,20 @@ public class EnemyAI : MonoBehaviour, IPausable
         AttachPausable();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        CurrentHealth = TotalHealth;
+        HealthBar.SetTotalHealth(TotalHealth);
+
         StartCoroutine(StateMachineHandler());
+    }
+
+    void Update()
+    {
+        // We have to make the healthbar's rotation the reverse of the enemy, so the healthbar stays facing forward
+        if (HealthBarCanvas != null) {
+            HealthBarCanvas.transform.rotation = Quaternion.Euler(0, transform.rotation.y * -1f, 0);
+        }
     }
 
     void OnDestroy()
@@ -276,7 +296,7 @@ public class EnemyAI : MonoBehaviour, IPausable
     // ATTACK State, AI wait for enemy to complete it's attack
     IEnumerator Attack(GameObject target) {
         myCharacterController.DoAttackAnimation();
-        while(myCharacterController.IsAttacking()) {            
+        while(myCharacterController.IsDoingBasicAttack()) {            
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -284,5 +304,22 @@ public class EnemyAI : MonoBehaviour, IPausable
         yield return new WaitForFixedUpdate();
         this.currentState = AiStateMachine.CHASE;
         yield return null;
+    }
+
+    public void AttackEnemy(float damage) {
+        // When the enemy's attacked, it'll turn red for 0.2s
+        StartCoroutine(ApplyAttackedMaterial());
+
+        // Decrement the enemy's health based on the damage
+        CurrentHealth -= (int)damage;
+        HealthBar.SetHealth(CurrentHealth);
+    }
+
+    IEnumerator ApplyAttackedMaterial() {
+        MeshRenderer.material = AttackedMaterial;
+
+        yield return new WaitForSeconds(0.2f);
+
+        MeshRenderer.material = DefaultMaterial;
     }
 }

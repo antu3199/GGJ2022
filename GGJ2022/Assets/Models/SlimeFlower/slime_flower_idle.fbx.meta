@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: -3464154546536419767
     second: slime_flower_idle
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _obj_slime_set_material_flowers_matnet1_principledshader1
+    second: {fileID: 2100000, guid: ea7abc572bca5964cacd3605d02ab544, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

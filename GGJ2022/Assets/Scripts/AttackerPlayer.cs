@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttackerPlayer : Player
 {
     // Damage for all the abilities
-    public float BasicAttackDamage = 10f;
+    public float BasicAttackDamage = 50f;
 
     void Start()
     {

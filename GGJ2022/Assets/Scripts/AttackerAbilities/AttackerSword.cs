@@ -14,10 +14,12 @@ public class AttackerSword : MonoBehaviour
         }
 
         // We also only want to check for collisions when the attacker is doing an attack animation
-        if (Attacker.IsAttacking()) {
+        if (Attacker.IsDoingBasicAttack()) {
             // Check if the sword collided with an enemy
             if (other.gameObject.tag == "Enemy") {
                 Debug.Log("Attacker sword and enemy collision detected");
+                EnemyAI enemy = (EnemyAI)other.gameObject.GetComponentInChildren<EnemyAI>();
+                enemy.AttackEnemy(Attacker.BasicAttackDamage);
             }
         }
     }

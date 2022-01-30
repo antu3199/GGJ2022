@@ -50,8 +50,6 @@ public abstract class Player : MonoBehaviour
         float horizontal = 0;
 
         if (Input.GetKey(ForwardKeyCode)) {
-            CurrentHealth -= 100;
-            HealthBar.SetHealth(CurrentHealth);
             vertical = 1;
         }
 
@@ -85,8 +83,8 @@ public abstract class Player : MonoBehaviour
         return AnimationController.GetCurrentAnimatorStateInfo(0);
     }
 
-    public bool IsAttacking() {
-        return MyCharacterController.IsAttacking();
+    public bool IsDoingBasicAttack() {
+        return MyCharacterController.IsDoingBasicAttack();
     }
 
 
