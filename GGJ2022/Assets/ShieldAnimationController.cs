@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShieldAnimationController : MonoBehaviour
 {
     public DefenderPlayer DefenderPlayer;
+    public DefenderShield DefenderShield;
 
     public ShieldCollsionEffect shieldPrefab;
 
@@ -24,6 +25,16 @@ public class ShieldAnimationController : MonoBehaviour
     {
         ShieldCollsionEffect shield = GameObject.Instantiate<ShieldCollsionEffect>(shieldPrefab, DefenderPlayer.transform.position, Quaternion.identity);
         shield.ActivateShield(DefenderPlayer);
+    }
+
+     public void ActivateShieldWithDamage(float Damage)
+    {
+        DefenderShield.ActivateShieldWithDamage(Damage);
+    }
+
+    public void DeactivateShieldWithDamage()
+    {
+        DefenderShield.DeactivateShieldWithDamage();
     }
 
     public void MoveToPlayer()

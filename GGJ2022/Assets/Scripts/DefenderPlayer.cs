@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DefenderPlayer : Player
 {
+    public float Attack1Multiplier = 1;
+
+    
     void Start()
     {
         ForwardKeyCode = KeyCode.W;

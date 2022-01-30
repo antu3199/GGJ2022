@@ -364,7 +364,6 @@ public class EnemyAI : MonoBehaviour, IPausable
         if (IsAttacking) {
             // Check if the slime collided with a player
             if (hit.gameObject.tag == "Attacker" || hit.gameObject.tag == "Defender") {
-                Debug.Log("Enemy attacking player detected");
                 Player player = (Player)hit.gameObject.GetComponentInChildren<Player>();
                 player.GetAttacked(player.CalculateDamageTaken(Damage));
             }
