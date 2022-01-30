@@ -377,7 +377,7 @@ public class EnemyAI : MonoBehaviour, IPausable
 
         // Decrement the enemy's health based on the damage
         CurrentHealth -= (int)damage;
-        HealthBar.SetHealth(CurrentHealth);
+        HealthBar.SetHealth(CurrentHealth < 0 ? 0 : CurrentHealth);
 
         if (CurrentHealth <= 0) {
             if (!isDead) {

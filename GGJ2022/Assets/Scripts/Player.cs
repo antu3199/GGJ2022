@@ -146,7 +146,7 @@ public abstract class Player : MonoBehaviour
     public void GetAttacked(float damage) {
         // Decrement the player's health based on the damage
         CurrentHealth -= (int)damage;
-        HealthBar.SetHealth(CurrentHealth);
+        HealthBar.SetHealth(CurrentHealth < 0 ? 0 : CurrentHealth);
 
         if (CurrentHealth <= 0) {
             if (!IsDead) {
