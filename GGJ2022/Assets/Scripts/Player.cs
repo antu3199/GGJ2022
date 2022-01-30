@@ -213,6 +213,13 @@ public abstract class Player : MonoBehaviour
         }
     }
 
+    public void AddShield(int shield)
+    {
+        if (IsDead) return;
+        
+        CurrentShield += shield;
+        ShieldBar.SetHealth(CurrentShield);
+    }
 
     public abstract void DoAbility1();
 

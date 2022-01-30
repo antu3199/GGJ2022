@@ -11,6 +11,12 @@ public class ShieldAnimationController : MonoBehaviour
 
     bool IsMovingToPlayer = false;
 
+    public float MovementSpeed = 5;
+    public int ShieldHealth = 400;
+
+    float maxTime = 2f;
+    float currentTime = 0;
+
     public void SetCanMove(int Enabled)
     {
          DefenderPlayer.CanMove = Enabled == 0 ? false : true;
@@ -40,6 +46,7 @@ public class ShieldAnimationController : MonoBehaviour
     public void MoveToPlayer()
     {
         IsMovingToPlayer = true;
+        currentTime = 0;
     }
 
 
@@ -55,15 +62,22 @@ public class ShieldAnimationController : MonoBehaviour
             float dist = Vector3.Distance(attackerPosition, defenderPosition);
             if (dist > thresh)
             {
-                Vector3 newPos = Vector3.Lerp(attackerPosition, defenderPosition, 0.05f * Time.deltaTime);
-                DefenderPlayer.PlayerVelocity = (attackerPosition - defenderPosition) * 5;
+                DefenderPlayer.PlayerVelocity = (attackerPosition - defenderPosition) * MovementSpeed;
+                currentTime += Time.deltaTime;
+
+                if (currentTime >= maxTime)
+                {
+                    currentTime = 0;
+                    IsMovingToPlayer = false;
+                    DefenderPlayer.PlayerVelocity = Vector3.zero;
+                }
             }
             else
             {
                 IsMovingToPlayer = false;
                 DefenderPlayer.PlayerVelocity = Vector3.zero;
+                GameManager.Instance.GetAttackerPlayer().AddShield(ShieldHealth);
             }
-
         }
     }
 
