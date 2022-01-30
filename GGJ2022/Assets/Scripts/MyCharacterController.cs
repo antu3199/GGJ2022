@@ -50,4 +50,15 @@ public class MyCharacterController
             _animationController.SetTrigger("DoAttack");
         }
     }
+
+    public virtual void Death() {
+        DoDeathAnimation(); // Do the death animation
+    }
+
+    public virtual void DoDeathAnimation() {
+        if (_animationController != null) {
+            _animationController.ResetTrigger("Die");
+            _animationController.SetTrigger("Die");
+        }
+    }
 }

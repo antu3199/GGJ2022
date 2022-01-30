@@ -306,13 +306,18 @@ public class EnemyAI : MonoBehaviour, IPausable
         yield return null;
     }
 
-    public void AttackEnemy(float damage) {
+    public void GetAttacked(float damage) {
         // When the enemy's attacked, it'll turn red for 0.2s
         StartCoroutine(ApplyAttackedMaterial());
 
         // Decrement the enemy's health based on the damage
         CurrentHealth -= (int)damage;
         HealthBar.SetHealth(CurrentHealth);
+
+        if (CurrentHealth <= 0) {
+            // todo: Go into dead state, and do some death pfx and then destroy this object
+            myCharacterController.Death();
+        }
     }
 
     IEnumerator ApplyAttackedMaterial() {

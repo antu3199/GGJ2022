@@ -19,7 +19,7 @@ public class AttackerSword : MonoBehaviour
             if (other.gameObject.tag == "Enemy") {
                 Debug.Log("Attacker sword and enemy collision detected");
                 EnemyAI enemy = (EnemyAI)other.gameObject.GetComponentInChildren<EnemyAI>();
-                enemy.AttackEnemy(Attacker.BasicAttackDamage);
+                enemy.GetAttacked(Attacker.BasicAttackDamage);
             }
         }
     }
