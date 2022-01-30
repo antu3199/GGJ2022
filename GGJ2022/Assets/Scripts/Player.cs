@@ -39,6 +39,9 @@ public abstract class Player : MonoBehaviour
     protected KeyCode LeftKeyCode = KeyCode.LeftArrow;
     protected KeyCode RightKeyCode = KeyCode.RightArrow;
 
+    public Player RedirectTarget {get; set;}
+    public System.Action<float> DamageRedirector = null;
+
     void Awake() {
         MyCharacterController = new MyCharacterController(CharacterController, AnimationController);
         CanMove = true;
@@ -143,7 +146,14 @@ public abstract class Player : MonoBehaviour
         return damage * (100 / (100 + Armor));
     }
 
-    public void GetAttacked(float damage) {
+    public void GetAttacked(float damage, bool ignoreRedirector = false) {
+        if (DamageRedirector != null && !ignoreRedirector && RedirectTarget.IsDead == false)
+        {
+            // Redirects the damage
+            DamageRedirector(damage);
+            return;
+        }
+
         // Decrement the player's health based on the damage
         CurrentHealth -= (int)damage;
         HealthBar.SetHealth(CurrentHealth < 0 ? 0 : CurrentHealth);
