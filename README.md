@@ -14,6 +14,6 @@ Player 2:
 Made for global gam jam 2022: https://globalgamejam.org/2022/games/sword-shield-9
 
 ![Screenshot 1](1.png?raw=true "Screenshot 1")
-![Screenshot 2](2.png?raw=true "Screenshot 2")
-![Screenshot 3](3.png?raw=true "Screenshot 3")
+![Screenshot 2](2.jpg?raw=true "Screenshot 2")
+![Screenshot 3](3.jpg?raw=true "Screenshot 3")
 
