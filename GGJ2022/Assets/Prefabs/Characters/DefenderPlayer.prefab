@@ -548,9 +548,9 @@ MonoBehaviour:
   HealthBar: {fileID: 8295577861460806435}
   ShieldBar: {fileID: 7349120997831157614}
   HealthBarCanvas: {fileID: 2863134675238743323}
-  TotalHealth: 6500
+  TotalHealth: 3000
   Armor: 150
-  InitialShield: 3500
+  InitialShield: 1000
   IsDead: 0
   PlayerVelocity: {x: 0, y: 0, z: 0}
   PlayerSpeed: 3
