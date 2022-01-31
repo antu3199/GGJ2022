@@ -227,7 +227,9 @@ public abstract class Player : MonoBehaviour
     {
         if (IsDead) return;
 
+
         CurrentShield += shield;
+        CurrentShield = Mathf.Clamp(CurrentShield, 0, TotalHealth);
         ShieldBar.SetHealth(CurrentShield);
     }
 
