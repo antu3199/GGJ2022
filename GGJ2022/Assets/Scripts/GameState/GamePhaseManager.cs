@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum GamePhase {
+public enum GamePhase {
 	FREE_ROAM,
 	PLAN,
 	EXECUTE
@@ -14,7 +14,7 @@ enum GamePhase {
 
 public class GamePhaseManager: Global<GamePhaseManager> 
 {
-	[SerializeField] GamePhase _currentPhase;
+	public GamePhase _currentPhase;
 	[SerializeField] PauseController _pauseController;
 	[SerializeField] Dictionary<GameObject, RechargeableGauge> _gauges = new Dictionary<GameObject, RechargeableGauge>();
 	

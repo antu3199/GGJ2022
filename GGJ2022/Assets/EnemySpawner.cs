@@ -23,7 +23,10 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        curTime += Time.deltaTime;
+        if (GamePhaseManager.Instance._currentPhase == GamePhase.FREE_ROAM)
+        {
+            curTime += Time.deltaTime;
+        }
 
         if (curTime >= TimeBeforeSpawn)
         {
