@@ -74,9 +74,21 @@ public class ShieldAnimationController : MonoBehaviour
             }
             else
             {
+                AttackerPlayer attacker = GameManager.Instance.GetAttackerPlayer();
+
                 IsMovingToPlayer = false;
                 DefenderPlayer.PlayerVelocity = Vector3.zero;
-                GameManager.Instance.GetAttackerPlayer().AddShield(ShieldHealth);
+                if (!attacker.IsDead)
+                {
+                    attacker.AddShield(ShieldHealth);
+                }
+                else
+                {
+                    int damage = DefenderPlayer.GetHealth() / 2;
+                    attacker.Revive();
+                    attacker.SetHealth(damage);
+                    DefenderPlayer.GetAttacked(damage, true);
+                }
             }
         }
     }

@@ -467,9 +467,10 @@ MonoBehaviour:
   HealthBar: {fileID: 1873168565947515996}
   ShieldBar: {fileID: 1088840189366413329}
   HealthBarCanvas: {fileID: 3212081341116458464}
-  TotalHealth: 1000
+  TotalHealth: 600
   Armor: 0
   InitialShield: 250
+  IsDead: 0
   PlayerVelocity: {x: 0, y: 0, z: 0}
   PlayerSpeed: 3
   JumpHeight: 1
@@ -1142,6 +1143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+--- !u!4 &2504196182752228036 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5447485072640137603, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
+  m_PrefabInstance: {fileID: 7591358023493266247}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7985817392877784236 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
@@ -1150,11 +1156,6 @@ Transform:
 --- !u!1 &7320744367917733398 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
-  m_PrefabInstance: {fileID: 7591358023493266247}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2504196182752228036 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5447485072640137603, guid: 8cff1bf093a0ff34d86d7fb2008cb28b, type: 3}
   m_PrefabInstance: {fileID: 7591358023493266247}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &8465987813919406319

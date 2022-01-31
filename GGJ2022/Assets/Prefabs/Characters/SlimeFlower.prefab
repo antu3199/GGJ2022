@@ -74,7 +74,7 @@ MonoBehaviour:
   HealthBar: {fileID: 6694471811221792292}
   HealthBarCanvas: {fileID: 8978878334711905763}
   TotalHealth: 300
-  Damage: 500
+  Damage: 250
   playerSpeed: 4
   jumpHeight: 1
   turnSpeedInDegPerSec: 90
@@ -344,6 +344,22 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 82fbfeb5f2aba6b48ae9406dfc79b046, type: 3}
       propertyPath: m_Name
       value: slime_flower_idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436805663696350335, guid: 82fbfeb5f2aba6b48ae9406dfc79b046, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.2865782e-15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096322304590433034, guid: 82fbfeb5f2aba6b48ae9406dfc79b046, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 11.890484
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096322304590433034, guid: 82fbfeb5f2aba6b48ae9406dfc79b046, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.0000013722118
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096322304590433034, guid: 82fbfeb5f2aba6b48ae9406dfc79b046, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.00000021829666
       objectReference: {fileID: 0}
     - target: {fileID: 8318808343202223335, guid: 82fbfeb5f2aba6b48ae9406dfc79b046, type: 3}
       propertyPath: m_Materials.Array.size
