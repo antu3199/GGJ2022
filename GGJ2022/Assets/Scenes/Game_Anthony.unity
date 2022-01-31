@@ -2826,14 +2826,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 170162730689419275, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 170162730689419275, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 250540234799267541, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
       propertyPath: m_Name
       value: AttackerPlayer
@@ -2842,14 +2834,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 578964536}
-    - target: {fileID: 5414601357600118429, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5414601357600118429, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7531714756243614253, guid: a7d715bd1b85909429d5258ec7cb2488, type: 3}
       propertyPath: m_RootOrder
       value: 6
